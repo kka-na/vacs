@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import {Route, BrowserRouter, Routes} from 'react-router-dom'
+import { ThemeProvider } from '@material-ui/core';
+import Navbar from './components/Navbar';
+import mainTheme from './mainTheme'
+import Home from './pages/home/Home';
+import Manual from './pages/manual/Manual';
+import Visualization from './pages/visualize/Visualization';
+import Alert from './pages/alert/Alert';
+import Control from './pages/control/Control';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={mainTheme}>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/visualize" element={<Visualization />} />
+          <Route path="/alert" element={<Alert />} />
+          <Route path="/control" element={<Control />} />
+          <Route path="/manual" element={<Manual />} />
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 
 export default App;
+
