@@ -10,7 +10,7 @@ const Styles = makeStyles((theme)=>({
 }));
  
 const api = {
-    key : "bb3de0e0ab8e5cf7b04cf794a64f2118",
+    key : process.env.REACT_APP_OPENWEATHER_KEY,
     base : "https://api.openweathermap.org/data/2.5/"
 };
 

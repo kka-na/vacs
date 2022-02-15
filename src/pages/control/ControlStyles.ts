@@ -46,12 +46,7 @@ export default makeStyles((theme)=>({
                 backgroundColor: '#362577',
                 borderRadius: '4px',
                 boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
-                color: '#fff',
-                '&:hover': {
-                    backgroundColor: '#0c1024',
-                    borderRadius: '4px',
-                    boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
-                    color: '#6569d7',},},
+                color: '#fff',},
         },
         
     },

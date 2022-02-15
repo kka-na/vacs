@@ -3,7 +3,6 @@ import React,{useState} from "react";
 import ROSLIB from "roslib";
 import VizStyles from "./VizStyles.ts";
 import { Grid, Card, CardMedia, Container } from "@material-ui/core";
-
 import { Map, MapMarker, MapTypeId } from "react-kakao-maps-sdk";
 
 const ros = new ROSLIB.Ros({
