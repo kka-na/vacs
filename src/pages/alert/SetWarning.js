@@ -35,12 +35,14 @@ const SetWarning =(props)=>{
         }
     }
 
-    if(props.sub){
+    if(!isSub && props.sub){
+        setIsSub(true);
         warningTopic.subscribe(function(message){
             setWarningMessage(message);
         });
     }
-    if(!props.sub){
+    if(isSub && !props.sub){
+        setIsSub(false);
         warningTopic.unsubscribe();
     }
 
@@ -68,20 +70,20 @@ const SetWarning =(props)=>{
                         <ToggleButton className={classes.warn_toggle_button} value={1}>BTN</ToggleButton> 
                         <ToggleButton className={classes.warn_toggle_button} value={2}>BTN</ToggleButton>
                         <ToggleButton className={classes.warn_toggle_button} value={3}>BTN</ToggleButton>
-                        <ToggleButton className={classes.warn_toggle_button} value={2}>BTN</ToggleButton>
-                        <ToggleButton className={classes.warn_toggle_button} value={3}>BTN</ToggleButton>  
+                        <ToggleButton className={classes.warn_toggle_button} value={4}>BTN</ToggleButton>
+                        <ToggleButton className={classes.warn_toggle_button} value={5}>BTN</ToggleButton>  
                     </ToggleButtonGroup>
                     <ToggleButtonGroup value={warns} className={classes.warn_toggle_button_group} exclusive fullWidth>
-                        <ToggleButton className={classes.warn_toggle_button} value={0}>BTN</ToggleButton>
-                        <ToggleButton className={classes.warn_toggle_button} value={1}>BTN</ToggleButton> 
-                        <ToggleButton className={classes.warn_toggle_button} value={2}>BTN</ToggleButton>
-                        <ToggleButton className={classes.warn_toggle_button} value={3}>BTN</ToggleButton>
-                        <ToggleButton className={classes.warn_toggle_button} value={2}>BTN</ToggleButton>
-                        <ToggleButton className={classes.warn_toggle_button} value={3}>BTN</ToggleButton>  
+                        <ToggleButton className={classes.warn_toggle_button} value={6}>BTN</ToggleButton>
+                        <ToggleButton className={classes.warn_toggle_button} value={7}>BTN</ToggleButton> 
+                        <ToggleButton className={classes.warn_toggle_button} value={8}>BTN</ToggleButton>
+                        <ToggleButton className={classes.warn_toggle_button} value={9}>BTN</ToggleButton>
+                        <ToggleButton className={classes.warn_toggle_button} value={10}>BTN</ToggleButton>
+                        <ToggleButton className={classes.warn_toggle_button} value={11}>BTN</ToggleButton>  
                     </ToggleButtonGroup>
                 </Grid>
                 <Grid item xs={12}>
-                    <Container className={classes.map}>
+                    <Container className={classes.map} fullWidth>
                         <DeckMap />
                     </Container>
                 </Grid>

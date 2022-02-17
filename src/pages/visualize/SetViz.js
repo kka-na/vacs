@@ -71,7 +71,7 @@ const SetViz = (props) => {
                     </Card> 
                 </Grid>
                 <Grid item xs={4}>
-                    <Map center={position.center} isPanto={position.isPanto} style={{height:"0",paddingBottom:'133.33%'}} level={3}>
+                    <Map center={position.center} isPanto={position.isPanto} style={{height:"0",paddingBottom:'150%'}} level={3}>
                         <MapMarker position={position.center}/>
                         <MapTypeId type={kakao.maps.MapTypeId.TRAFFIC}/>
                     </Map>

@@ -20,7 +20,7 @@ export default makeStyles((theme)=>({
         backgroundColor: '#0f152e',
         color: '#fffff3',
         height: '0',
-        paddingBottom:"66.66%"
+        paddingBottom:"75%"
     },
     toggle_button_group:{
         '& .MuiToggleButtonGroup-grouped': {
@@ -55,6 +55,20 @@ export default makeStyles((theme)=>({
         },
         
     },
+    pub_button: {
+        fontFamily: "Rajdhani, sans-serif",
+        fontSize: "1rem",
+        backgroundColor: '#0c1024',
+        color: '#fff',
+        marginTop: '0.5rem',
+        borderRadius: '4px',
+        boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
+        '&:hover': {
+            backgroundColor: '#85def5',
+            borderRadius: '4px',
+            boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
+            color: '#0c1024',},
+    },
     set_value:{
         display:'flex',
         verticalAlign: 'middle',
@@ -70,12 +84,13 @@ export default makeStyles((theme)=>({
         alignItems: 'center',
     },
     input_grid:{
-        marginTop:"1.2rem",
+        marginTop: "0.2rem",
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
     },
     text_field:{
+        marginBottom: "0.3rem",
         '& label':{
             color:'white',
             fontSize:"0.8rem",
@@ -86,9 +101,9 @@ export default makeStyles((theme)=>({
         '& .MuiInputBase-root':{
             color:'white',
         },
-        '&.MuiOutlinedInput-root': {
+        '& .MuiOutlinedInput-root': {
             '& fieldset': {
-              borderColor: 'white',
+              border: '1px solid rgba(255,255,255,.7)',
             },
             '&:hover fieldset': {
               borderColor: '#3b7bea',

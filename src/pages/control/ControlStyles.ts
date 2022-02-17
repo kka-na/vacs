@@ -22,6 +22,38 @@ export default makeStyles((theme)=>({
         height: '0',
         paddingBottom:"66.66%"
     },
+    mode_toggle_button_group:{
+        '& .MuiToggleButtonGroup-grouped': {
+            marginBottom: '0.8rem',
+            borderRadius: '4px !important',
+          },
+    },
+    mode_toggle_button: {
+        '&.MuiToggleButton-root':{
+            fontFamily: "Rajdhani, sans-serif",
+            fontSize: "1rem",
+            backgroundColor: '#0c1024',
+            color: '#fff',
+            borderRadius: '4px',
+            boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
+            '&:hover': {
+                backgroundColor: '#3b7bea',
+                borderRadius: '4px',
+                boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
+                color: '#fff',},
+            '&.Mui-selected': {
+                backgroundColor: '#85def5',
+                borderRadius: '4px',
+                boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
+                color: '#0c1024',
+                '&:hover': {
+                    backgroundColor: '#0c1024',
+                    borderRadius: '4px',
+                    boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
+                    color: '#3b7bea',},},
+        },
+        
+    },
     toggle_button_group:{
         '& .MuiToggleButtonGroup-grouped': {
             margin: '0.5rem',
@@ -46,9 +78,83 @@ export default makeStyles((theme)=>({
                 backgroundColor: '#362577',
                 borderRadius: '4px',
                 boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
-                color: '#fff',},
+                color: '#fff',
+                '&:hover': {
+                    backgroundColor: '#0c1024',
+                    borderRadius: '4px',
+                    boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
+                    color: '#6569d7',},},
         },
         
+    },
+    pstate_toggle_button_group:{
+        '& .MuiToggleButtonGroup-grouped': {
+            margin: '0.5rem',
+            borderRadius: '4px !important',
+            height: '3rem',
+          },
+    },
+    pstate_toggle_button: {
+        '&.MuiToggleButton-root':{
+            fontFamily: "Rajdhani, sans-serif",
+            fontSize: "1rem",
+            backgroundColor: '#0c1024',
+            color: '#fff',
+            borderRadius: '4px',
+            boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
+            '&.Mui-selected': {
+                backgroundColor: '#362577',
+                borderRadius: '4px',
+                boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
+                color: '#fff',
+                '&:hover': {
+                    backgroundColor: '#0c1024',
+                    borderRadius: '4px',
+                    boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
+                    color: '#fff',},},
+        },
+        
+    },
+    scenario_toggle_button_group:{
+        '& .MuiToggleButtonGroup-grouped': {
+            marginTop: '0.3rem',
+            marginRight: '0.5rem',
+            marginBottom: '0.3rem',
+            borderRadius: '4px !important',
+          },
+    },
+    scenario_toggle_button: {
+        '&.MuiToggleButton-root':{
+            fontFamily: "Rajdhani, sans-serif",
+            fontSize: "0.8rem",
+            backgroundColor: '#0c1024',
+            color: '#fff',
+            borderRadius: '4px',
+            boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
+            '&:hover': {
+                backgroundColor: '#3b7bea',
+                borderRadius: '4px',
+                boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
+                color: '#fff',},
+            '&.Mui-selected': {
+                backgroundColor: '#85def5',
+                borderRadius: '4px',
+                boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
+                color: '#0c1024',
+                '&:hover': {
+                    backgroundColor: '#0c1024',
+                    borderRadius: '4px',
+                    boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
+                    color: '#3b7bea',},},
+        },
+        
+    },
+    state_text:{
+        display:'flex',
+        marginTop: "0.2rem",
+        verticalAlign: 'middle',
+        color:'#fff',
+        fontSize: '1rem',
     },
     set_value:{
         display:'flex',
@@ -65,7 +171,6 @@ export default makeStyles((theme)=>({
         alignItems: 'center',
     },
     input_grid:{
-        marginTop:"1.2rem",
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -81,9 +186,9 @@ export default makeStyles((theme)=>({
         '& .MuiInputBase-root':{
             color:'white',
         },
-        '&.MuiOutlinedInput-root': {
+        '& .MuiOutlinedInput-root': {
             '& fieldset': {
-              borderColor: 'white',
+              border: '1px solid rgba(255,255,255,.7)',
             },
             '&:hover fieldset': {
               borderColor: '#3b7bea',

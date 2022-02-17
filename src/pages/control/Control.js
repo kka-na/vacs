@@ -1,8 +1,11 @@
 import React, {useState} from "react";
 
 import {Box, Grid} from "@material-ui/core"
-import RosSubViz from "../../components/RosSub/RosSubViz";
 import SideRos from "../../components/RosSub/SideRos";
+import RosSubAlert from "../../components/RosSub/RosSubAlert";
+import SetValueControl from "./SetValueControl"
+import SetState from "./SetState";
+import SideViz from "./SideViz";
 
 
 const Control = () => {
@@ -11,15 +14,20 @@ const Control = () => {
 
     return( 
         <Box m={3} mt={1} >
-            <RosSubViz addSub={addSub}/>
+            <RosSubAlert addSub={addSub}/>
             <Box mt={1}></Box>
             <Grid container spacing={2}>
                 <Grid item xs={1}>
                     <SideRos sub={getSub}/>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={2}>
+                    <SetValueControl sub={getSub}/>
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={6}>
+                    <SetState sub={getSub} />
+                </Grid>
+                <Grid item xs={3}>
+                    <SideViz sub={getSub} />
                 </Grid>
             </Grid>
         </Box>

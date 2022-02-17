@@ -10,7 +10,6 @@ const Styles = makeStyles((theme)=>({
 }));
  
 const api = {
-    key : process.env.REACT_APP_OPENWEATHER_KEY,
     base : "https://api.openweathermap.org/data/2.5/"
 };
 
@@ -31,7 +30,7 @@ export default function Weather(){
                 setLat(position.coords.latitude);
                 setLong(position.coords.longitude);
             });
-            await fetch(`${api.base}/weather/?lat=${lat}&lon=${long}&units=metric&APPID=${api.key}`)
+            await fetch(`${api.base}/weather/?lat=${lat}&lon=${long}&units=metric&APPID=${process.env.REACT_APP_OPENWEATHER_KEY}`)
             .then(res => res.json())
             .then(result => {setWeather(result) 
                 console.log(result);});
