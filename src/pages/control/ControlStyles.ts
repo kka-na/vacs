@@ -87,6 +87,21 @@ export default makeStyles((theme)=>({
         },
         
     },
+    apply_button: {
+        fontFamily: "Rajdhani, sans-serif",
+        fontSize: "1rem",
+        backgroundColor: '#0c1024',
+        color: '#fff',
+        marginTop: '0.5rem',
+        borderRadius: '4px',
+        height: '3rem',
+        boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
+        '&:hover': {
+            backgroundColor: '#6569d7',
+            borderRadius: '4px',
+            boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
+            color: '#0c1024',},
+    },
     pstate_toggle_button_group:{
         '& .MuiToggleButtonGroup-grouped': {
             margin: '0.5rem',
@@ -97,13 +112,13 @@ export default makeStyles((theme)=>({
     pstate_toggle_button: {
         '&.MuiToggleButton-root':{
             fontFamily: "Rajdhani, sans-serif",
-            fontSize: "1rem",
+            fontSize: "0.8rem",
             backgroundColor: '#0c1024',
             color: '#fff',
             borderRadius: '4px',
             boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
             '&.Mui-selected': {
-                backgroundColor: '#362577',
+                backgroundColor: '#6569d7',
                 borderRadius: '4px',
                 boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
                 color: '#fff',

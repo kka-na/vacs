@@ -9,8 +9,13 @@ const ros = new ROSLIB.Ros({
     url: 'ws://localhost:9090'
 });
 
-const modeTopic = new ROSLIB.Topic({ ros: ros, name: '/mode', messageType: 'geometry_msgs/Twist'});
-const lksTopic = new ROSLIB.Topic({ros: ros, name: '/lks_state', messageType: 'std_msgs/String'});
+const modeTopic = new ROSLIB.Topic({ ros: ros, name: '/mode', messageType: 'geometry_msgs/Vector3'});
+const lksTopic = new ROSLIB.Topic({ros: ros, name: '/lks_state', messageType: 'std_msgs/Bool'});
+const sbbTopic = new ROSLIB.Topic({ros: ros, name: '/sbb_state', messageType: 'std_msgs/Bool'});
+const btn1Topic = new ROSLIB.Topic({ros: ros, name: '/btn1_state', messageType: 'std_msgs/Bool'});
+const btn2Topic = new ROSLIB.Topic({ros: ros, name: '/btn2_state', messageType: 'std_msgs/Bool'});
+const btn3Topic = new ROSLIB.Topic({ros: ros, name: '/btn3_state', messageType: 'std_msgs/Bool'});
+const btn4Topic = new ROSLIB.Topic({ros: ros, name: '/btn4_state', messageType: 'std_msgs/Bool'});
 const swaCurTopic = new ROSLIB.Topic({ros:ros, name: '/swa_current_val', messageType:  'geometry_msgs/Vector3'})
 const swaComTopic = new ROSLIB.Topic({ros:ros, name: '/swa_command_val', messageType:  'geometry_msgs/Vector3'})
 const accCurTopic = new ROSLIB.Topic({ros:ros, name: '/acc_current_val', messageType:  'geometry_msgs/Vector3'})
@@ -24,7 +29,12 @@ const SetValueViz = (props) => {
     const [receiveMode, setReceiveMode] = useState([]);
     const [isSub, setIsSub] = useState(false);
     const [btns, setBtns] = useState([]);
-    const [lks, setLks] = useState([]);
+    const [lks, setLKS] = useState(false);
+    const [sbb, setSBB] = useState(false);
+    const [btn1, setBTN1] = useState(false);
+    const [btn2, setBTN2] = useState(false);
+    const [btn3, setBTN3] = useState(false);
+    const [btn4, setBTN4] = useState(false);
     const [swaCur, setSWACur] = useState(0.0);
     const [swaCom, setSWACom] = useState(0.0);
     const [accCur, setACCCur] = useState(0.0);
@@ -47,6 +57,22 @@ const SetValueViz = (props) => {
 
     const btnChange = (event, btn) => {
         setBtns(btn);
+        if(isSub){
+            if(!lks && btn.includes('lks')){ lksTopic.publish({data:true}); setLKS(true); }
+            if(!sbb && btn.includes('sbb')){ sbbTopic.publish({data:true}); setSBB(true); }
+            if(!btn1 && btn.includes('btn1')){ btn1Topic.publish({data:true}); setBTN1(true); }
+            if(!btn2 && btn.includes('btn2')){ btn2Topic.publish({data:true}); setBTN2(true); }
+            if(!btn3 && btn.includes('btn3')){ btn3Topic.publish({data:true}); setBTN3(true); }
+            if(!btn4 && btn.includes('btn4')){ btn4Topic.publish({data:true}); setBTN4(true); }
+        }
+        if(isSub){
+            if(lks && !btn.includes('lks')){ lksTopic.publish({data:false}); setLKS(false); }
+            if(sbb && !btn.includes('sbb')){ sbbTopic.publish({data:false}); setSBB(false); }
+            if(btn1 && !btn.includes('btn1')){ btn1Topic.publish({data:false}); setBTN1(false); }
+            if(btn2 && !btn.includes('btn2')){ btn2Topic.publish({data:false}); setBTN2(false); }
+            if(btn3 && !btn.includes('btn3')){ btn3Topic.publish({data:false}); setBTN3(false); }
+            if(btn4 && !btn.includes('btn4')){ btn4Topic.publish({data:false}); setBTN4(false); }
+        }   
     }
 
     const pubClick = () => {
@@ -62,10 +88,7 @@ const SetValueViz = (props) => {
 
     if(!isSub && props.sub){
         setIsSub(true);
-        modeTopic.subscribe(function(message){
-            setReceiveMode(message.linear.x);
-        });
-        
+        modeTopic.subscribe(function(message){ setReceiveMode(message.x);});
     }
     if(isSub && !props.sub){
         setIsSub(false);

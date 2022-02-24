@@ -5,22 +5,9 @@ import ControlStyles from "./ControlStyles.ts";
 import { Grid, Card, CardMedia } from "@material-ui/core";
 import { Map, MapMarker, MapTypeId } from "react-kakao-maps-sdk";
 
-
-const ros = new ROSLIB.Ros({
-    url: 'ws://localhost:9090'
-});
-
-const cam0Topic = new ROSLIB.Topic({
-    ros: ros,
-    name: '/usb_cam/image_raw/compressed',
-    messageType: 'sensor_msgs/CompressedImage'
-});
-
-const gpsTopic = new ROSLIB.Topic({
-    ros: ros,
-    name: '/gps',
-    messageType:'geometry_msgs/Twist'
-});
+const ros = new ROSLIB.Ros({ url: 'ws://localhost:9090'});
+const cam0Topic = new ROSLIB.Topic({ ros: ros, name: '/img_compressed', messageType: 'sensor_msgs/CompressedImage'});
+const gpsTopic = new ROSLIB.Topic({ ros: ros, name: '/gps', messageType:'geometry_msgs/Vector3'});
 
 const SideViz = (props) =>{
     const classes = ControlStyles();
@@ -40,8 +27,8 @@ const SideViz = (props) =>{
         });
         gpsTopic.subscribe(function(message){
             setPosition({
-                center:{lat:message.linear.x, lng: message.linear.y},
-                isPanto: true,
+                center:{lat:message.x, lng: message.y},
+                isPanto: false,
             });
         });
     }

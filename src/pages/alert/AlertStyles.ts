@@ -2,13 +2,14 @@ import { makeStyles } from "@material-ui/core";
 
 export default makeStyles((theme)=>({
     map: {
+        marginTop: "-0.7rem",
         height: "30rem",
-        marginLeft: "-1.3rem",
+        marginLeft: "-1.4rem",
         width: "100%",
     },
     warning_message_card: {
         backgroundColor: '#fe86e3',
-        marginBottom: "0.5rem",
+        marginBottom: "0.5rem", 
         color: '#0c1024',
         height: '6.7rem',
         display:'flex',

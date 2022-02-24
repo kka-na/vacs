@@ -20,7 +20,7 @@ export default makeStyles((theme)=>({
         backgroundColor: '#0f152e',
         color: '#fffff3',
         height: '0',
-        paddingBottom:"75%"
+        paddingBottom:"60%"
     },
     toggle_button_group:{
         '& .MuiToggleButtonGroup-grouped': {
@@ -38,20 +38,20 @@ export default makeStyles((theme)=>({
             borderRadius: '4px',
             boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
             '&:hover': {
-                backgroundColor: '#6569d7',
+                backgroundColor: '#3b7bea',
                 borderRadius: '4px',
                 boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
                 color: '#fff',},
             '&.Mui-selected': {
-                backgroundColor: '#362577',
+                backgroundColor: '#85def5',
                 borderRadius: '4px',
                 boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
-                color: '#fff',
+                color: '#0c1024',
                 '&:hover': {
                     backgroundColor: '#0c1024',
                     borderRadius: '4px',
                     boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
-                    color: '#6569d7',},},
+                    color: '#3b7bea',},},
         },
         
     },
@@ -62,9 +62,10 @@ export default makeStyles((theme)=>({
         color: '#fff',
         marginTop: '0.5rem',
         borderRadius: '4px',
+        height: '3rem',
         boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
         '&:hover': {
-            backgroundColor: '#85def5',
+            backgroundColor: '#6569d7',
             borderRadius: '4px',
             boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
             color: '#0c1024',},

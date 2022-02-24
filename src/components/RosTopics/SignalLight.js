@@ -37,11 +37,6 @@ export default function SignalLights(props){
                                     <ArrowBack className={classes.left_on}/>
                                     <ArrowForward className={classes.right_on}/>
                                 </Grid>
-                    case 3:
-                        return <Grid item xs container direction="row" >
-                                    <ArrowBack className={classes.lights}/>
-                                    <ArrowForward/>
-                                </Grid>
                     default:
                         return <Grid item xs container direction="row" >
                                     <ArrowBack className={classes.lights}/>

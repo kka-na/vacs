@@ -9,11 +9,7 @@ const ros = new ROSLIB.Ros({
     url: 'ws://localhost:9090'
 });
 
-const modeTopic = new ROSLIB.Topic({
-    ros: ros,
-    name: '/mode',
-    messageType: 'geometry_msgs/Twist'
-});
+const modeTopic = new ROSLIB.Topic({ ros: ros, name: '/mode', messageType: 'geometry_msgs/Vector3'});
 
 const RosSubAlert = ({addSub}) => {
     const classes = SharedStyles();
@@ -25,7 +21,7 @@ const RosSubAlert = ({addSub}) => {
         if(newSub){
             addSub(true);
             modeTopic.subscribe(function(message){
-                setReceiveMode(message.linear.x);
+                setReceiveMode(message.x);
             });
         }else{
             addSub(false);
