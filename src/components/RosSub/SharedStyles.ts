@@ -20,6 +20,8 @@ export default makeStyles((theme)=>({
             fontSize: "1rem",
             backgroundColor: '#0c1024',
             color: '#fff',
+            height: '2.5rem',
+            padding: '0.5rem',
             borderRadius: '4px',
             boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
             '&:hover': {

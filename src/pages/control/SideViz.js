@@ -45,7 +45,7 @@ const SideViz = (props) =>{
                 <CardMedia component="img" className={classes.media} image={receiveCam0.src}/>
             </Card> 
             <Grid item>
-                <Map center={position.center} isPanto={position.isPanto} style={{height:"0",paddingBottom:'130%'}} level={3}>
+                <Map center={position.center} isPanto={position.isPanto} style={{height:"0",paddingBottom:'100%'}} level={3}>
                     <MapMarker position={position.center}/>
                     <MapTypeId type={kakao.maps.MapTypeId.TRAFFIC}/>
                 </Map>

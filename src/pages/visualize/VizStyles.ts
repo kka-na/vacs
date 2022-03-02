@@ -20,7 +20,7 @@ export default makeStyles((theme)=>({
         backgroundColor: '#0f152e',
         color: '#fffff3',
         height: '0',
-        paddingBottom:"60%"
+        paddingBottom:"50%"
     },
     toggle_button_group:{
         '& .MuiToggleButtonGroup-grouped': {

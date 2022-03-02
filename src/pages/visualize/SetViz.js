@@ -2,8 +2,9 @@
 import React,{useState} from "react";
 import ROSLIB from "roslib";
 import VizStyles from "./VizStyles.ts";
-import { Grid, Card, CardMedia, Container } from "@material-ui/core";
+import { Grid, Card, CardMedia} from "@material-ui/core";
 import { Map, MapMarker, MapTypeId } from "react-kakao-maps-sdk";
+import PointCloudView from "../../components/PointCloud/PointCloudView";
 
 const ros = new ROSLIB.Ros({ url: 'ws://localhost:9090'});
 const cam0Topic = new ROSLIB.Topic({ ros: ros, name: '/img_compressed', messageType: 'sensor_msgs/CompressedImage'});
@@ -23,6 +24,7 @@ const SetViz = (props) => {
         cam0Topic.subscribe(function(message){
             let image = new Image();
             image.src = "data:image/jpg;base64," + message.data;
+            console.log(message.data);
             setReceiveCam0(image);
         });
         gpsTopic.subscribe(function(message){
@@ -58,15 +60,13 @@ const SetViz = (props) => {
                     </Card> 
                 </Grid>
                 <Grid item xs={4}>
-                    <Map center={position.center} isPanto={position.isPanto} style={{height:"0",paddingBottom:'120%'}} level={3}>
+                    <Map center={position.center} isPanto={position.isPanto} style={{height:"0",paddingBottom:'100%'}} level={3}>
                         <MapMarker position={position.center}/>
                         <MapTypeId type={kakao.maps.MapTypeId.TRAFFIC}/>
                     </Map>
                 </Grid>
                 <Grid item xs={8}>
-                    <Card className={classes.card_lidar}>
-                        <CardMedia component="img"/>
-                    </Card>
+                    <PointCloudView sub={props.sub}/>
                 </Grid>
             </Grid>
         </div>

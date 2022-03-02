@@ -34,6 +34,7 @@ export default makeStyles((theme)=>({
             fontSize: "1rem",
             backgroundColor: '#0c1024',
             color: '#fff',
+            height: '3rem',
             borderRadius: '4px',
             boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
             '&:hover': {
@@ -67,6 +68,7 @@ export default makeStyles((theme)=>({
             fontSize: "1rem",
             backgroundColor: '#0c1024',
             color: '#fff',
+
             borderRadius: '4px',
             boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
             '&:hover': {
@@ -144,6 +146,7 @@ export default makeStyles((theme)=>({
             fontSize: "0.8rem",
             backgroundColor: '#0c1024',
             color: '#fff',
+            height: '2.5rem',
             borderRadius: '4px',
             boxShadow:'5px 5px 7px #05060e, -5px -5px 7px #131a3a',
             '&:hover': {
