@@ -10,7 +10,7 @@ export default makeStyles((theme)=>({
     },
     toggle_button_group:{
         '& .MuiToggleButtonGroup-grouped': {
-            marginRight: '0.5rem',
+            marginRight: '1rem',
             borderRadius: '4px !important',
           },
     },

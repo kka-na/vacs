@@ -12,10 +12,11 @@ class DotMaterial extends THREE.ShaderMaterial {
         float PI = 3.1415926538;
         float x = position.x;
         float y = position.y;
+        float z = position.z;
         vec3 pos = vec3(
           x,
           y,
-          -10.
+          z
         );
         gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0 );
         gl_PointSize = size;

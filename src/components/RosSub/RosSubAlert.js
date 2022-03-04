@@ -42,7 +42,7 @@ const RosSubAlert = ({addSub}) => {
             <Grid item xs={2} >
             </Grid>
             <Grid item xs={2} className={classes.grid}>
-                <ToggleButtonGroup className={classes.toggle_button_group} value={sub} exclusive onChange={handleChange}>
+                <ToggleButtonGroup className={classes.toggle_button_group} value={sub} exclusive onChange={handleChange} fullWidth>
                     <ToggleButton className={classes.toggle_button} value={true}>Subscribe</ToggleButton>
                     <ToggleButton className={classes.toggle_button} value={false}>Unsubscribe</ToggleButton>
                 </ToggleButtonGroup>

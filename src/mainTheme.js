@@ -9,7 +9,7 @@ const mainTheme = createTheme({
         main: '#6569d7',
       },
       error: {
-        main: '#fe86e3',
+        main: '#ff2659',
       },
       warning: {
         main: '#fe86e3',
@@ -18,7 +18,7 @@ const mainTheme = createTheme({
         main: '#ffff80',
       },
       success: {
-        main: '#85dcf5',
+        main: '#42f5ba',
       },
     },
 });
