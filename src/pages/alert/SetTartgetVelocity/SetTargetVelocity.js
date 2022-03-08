@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ROSLIB from "roslib";
 import SetTargetVelocityStyles from "./SetTargetVelocityStyles";
 import { Grid, Box, Button } from "@material-ui/core";

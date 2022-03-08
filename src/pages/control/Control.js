@@ -1,44 +1,45 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
-import {Box, Grid} from "@material-ui/core"
+import { Box, Grid } from "@material-ui/core";
 import SideRos from "../../components/RosSub/SideRos";
 import RosSubAlert from "../../components/RosSub/RosSubAlert";
-import SetValueControl from "./SetValueControl"
+import SetValueControl from "./SetValueControl";
 import SetState from "./SetState";
 import SideViz from "./SideViz";
-
+import Footer from "../../components/Footer/Footer";
 
 const Control = () => {
-    const [getSub, setSub] = useState(false);
-    const addSub = (bool) => { setSub(bool);};
+  const [getSub, setSub] = useState(false);
+  const addSub = (bool) => {
+    setSub(bool);
+  };
 
-    return( 
-        <Box m={3} mt={1} >
-            <RosSubAlert addSub={addSub}/>
-            <Box mt={1}></Box>
-            <Grid container spacing={2}>
-                <Grid item xs={1}>
-                    <SideRos sub={getSub}/>
-                </Grid>
-                <Grid item xs={2}>
-                    <SetValueControl sub={getSub}/>
-                </Grid>
-                <Grid item xs={6}>
-                    <SetState sub={getSub} />
-                </Grid>
-                <Grid item xs={3}>
-                    <SideViz sub={getSub} />
-                </Grid>
-            </Grid>
-        </Box>
-    );
+  return (
+    <Box m={3} mt={1}>
+      <RosSubAlert addSub={addSub} />
+      <Box mt={1}></Box>
+      <Grid container spacing={2}>
+        <Grid item xs={1}>
+          <SideRos sub={getSub} />
+        </Grid>
+        <Grid item xs={2}>
+          <SetValueControl sub={getSub} />
+        </Grid>
+        <Grid item xs={6}>
+          <SetState sub={getSub} />
+        </Grid>
+        <Grid item xs={3}>
+          <SideViz sub={getSub} />
+        </Grid>
+      </Grid>
+      <Footer />
+    </Box>
+  );
 };
 
 export default Control;
 
-
-//                                          
-                    
+//
 
 // _getModel(gl) {
 //     // a triangle that minimally cover the unit circle

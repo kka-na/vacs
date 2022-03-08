@@ -1,13 +1,12 @@
 import React from "react";
-import { Box, Typography } from "@material-ui/core";
 
 const Footer = () => {
   return (
-    <footer display="flex" align="center" height="100px">
-      <h4 style={{ color: "#fff", fontSize: "20px" }}>
+    <footer display="flex" align="center" height="40px">
+      <h4 style={{ mt: "0.5rem", color: "#fff", fontSize: "12px" }}>
         Copyright.2022 A.Eye team @ CVLab of INHA University
       </h4>
-      <img src="/pngs/aeye.png" width="100px" alt="aeyelogo" />
+      <img src="/pngs/aeye.png" width="80px" alt="aeyelogo" />
     </footer>
   );
 };

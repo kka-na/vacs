@@ -21,7 +21,8 @@
   
   .Home-header {
     background-color: #0c1024;
-    min-height: 100vh;
+    margin-top: 10rem;
+    margin-bottom: 15rem;
     display: flex;
     flex-direction: column;
     align-items: center;

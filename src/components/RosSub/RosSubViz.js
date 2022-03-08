@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import {
   ToggleButton,
-  Button,
   Grid,
   Checkbox,
   FormControlLabel,
   ToggleButtonGroup,
 } from "@mui/material";
-import SharedStyles from "./SharedStyles.ts";
+import SharedStyles from "./SharedStyles";
 import Weather from "../Weather/Weather";
 import Stopwatch from "../Stopwatch/Stopwatch";
 

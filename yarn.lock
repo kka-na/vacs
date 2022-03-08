@@ -10961,6 +10961,14 @@
     "@types/trusted-types" "^2.0.2"
     "workbox-core" "6.5.0"
 
+"worker-loader@^3.0.8":
+  "integrity" "sha512-XQyQkIFeRVC7f7uRhFdNMe/iJOdO6zxAaR3EWbDp45v3mDhrTi+++oswKNxShUNjPC/1xUp5DB29YKLhFo129g=="
+  "resolved" "https://registry.npmjs.org/worker-loader/-/worker-loader-3.0.8.tgz"
+  "version" "3.0.8"
+  dependencies:
+    "loader-utils" "^2.0.0"
+    "schema-utils" "^3.0.0"
+
 "wrap-ansi@^7.0.0":
   "integrity" "sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q=="
   "resolved" "https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-7.0.0.tgz"

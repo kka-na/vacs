@@ -4,10 +4,12 @@ import RosSubAlert from "../../components/RosSub/RosSubAlert";
 import SideRos from "../../components/RosSub/SideRos";
 import SetWarning from "./SetWarning";
 import SetDiag from "./SetDiag";
+import Footer from "../../components/Footer/Footer";
 
 const Alert = () => {
   const [getSub, setSub] = useState(false);
   const addSub = (bool) => {
+    console.log("Add Sub");
     setSub(bool);
   };
 
@@ -26,6 +28,7 @@ const Alert = () => {
           <SetWarning sub={getSub} />
         </Grid>
       </Grid>
+      <Footer />
     </Box>
   );
 };

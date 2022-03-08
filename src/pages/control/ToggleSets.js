@@ -1,23 +1,33 @@
-import React, {useEffect, useState} from "react";
-import { Grid, ToggleButton, ToggleButtonGroup} from '@mui/material';
-import ControlStyles from './ControlStyles.ts'
+import React from "react";
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import ControlStyles from "./ControlStyles";
 
-function ToggleSets(element){
-    const classes = ControlStyles();
-    const getToggles = () =>{
-        const toggleList = element.toggles.map((name) => {
-            return(<ToggleButton className={classes.scenario_toggle_button} value={name}>{name}</ToggleButton>)
-        });
-        return toggleList;
-    }
-    return(
-        <ToggleButtonGroup exclusive={element.exclusive} value={element.toggleValues} onChange={element.toggleChange} className={classes.scenario_toggle_button_group} fullWidth>
-            {getToggles()}
-        </ToggleButtonGroup>
-    );
+function ToggleSets(element) {
+  const classes = ControlStyles();
+  const getToggles = () => {
+    const toggleList = element.toggles.map((name) => {
+      return (
+        <ToggleButton className={classes.scenario_toggle_button} value={name}>
+          {name}
+        </ToggleButton>
+      );
+    });
+    return toggleList;
+  };
+  return (
+    <ToggleButtonGroup
+      exclusive={element.exclusive}
+      value={element.toggleValues}
+      onChange={element.toggleChange}
+      className={classes.scenario_toggle_button_group}
+      fullWidth
+    >
+      {getToggles()}
+    </ToggleButtonGroup>
+  );
 }
 
-export default ToggleSets
+export default ToggleSets;
 
 /*
 <ToggleButton className={classes.scenario_toggle_button} value={1}>1</ToggleButton>

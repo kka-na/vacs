@@ -2,58 +2,133 @@ import React, { useState } from "react";
 import ROSLIB from "roslib";
 import { Grid, Box, Container } from "@material-ui/core";
 import AlertStyles from "./AlertStyles";
-import DeckMap from "./DeckMap";
-import {
-  CardContent,
-  ToggleButton,
-  ToggleButtonGroup,
-  Typography,
-} from "@mui/material";
+import DeckMap from "../../components/DeckMap/DeckMap";
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import WarnMessage from "./WarnMessage/WarnMessage";
 import SystemState from "./SystemState";
 import SetTargetVelocity from "./SetTartgetVelocity/SetTargetVelocity";
+import DropMessage from "./DropMessage";
 
 const ros = new ROSLIB.Ros({ url: "ws://localhost:9090" });
 const modeTopic = new ROSLIB.Topic({
   ros: ros,
   name: "/mode",
-  messageType: "geometry_msgs/Vector3",
+  messageType: "std_msgs/Int8",
 });
 const modeSetTopic = new ROSLIB.Topic({
   ros: ros,
   name: "/mode_set",
-  messageType: "geometry_msgs/Vector3",
+  messageType: "std_msgs/Int8",
 });
-const diagTopic = new ROSLIB.Topic({
+const sensorStateTopic = new ROSLIB.Topic({
   ros: ros,
-  name: "/diag",
+  name: "/sensor_state",
   messageType: "std_msgs/Int8MultiArray",
+});
+const systemStateTopic = new ROSLIB.Topic({
+  ros: ros,
+  name: "/system_state",
+  messageType: "std_msgs/Int8MultiArray",
+});
+const emergyStopTopic = new ROSLIB.Topic({
+  ros: ros,
+  name: "/estop",
+  messageType: "std_msgs/Int8",
 });
 
 const SetWarning = (props) => {
   const classes = AlertStyles();
   const [isSub, setIsSub] = useState(false);
-  const [modes, setModes] = useState();
+  const [modes, setModes] = useState(0);
   const [warnState, setWarnState] = useState(0);
+  const [emergy, setEmergy] = useState(0);
+  const [isWarn, setIsWarn] = useState(false);
+  const [isRedWarn, setIsRedWarn] = useState(false);
+  const [isYellowWarn, setIsYellowWarn] = useState(false);
   const [systemState, setSystemState] = useState([false, false, false]);
-  //const [trigger, setTrigger] = useState(0);
+  // const setYellow = (bool) => {
+  //   setIsYellowWarn(bool);
+  // };
+
+  var mode_num = 0;
+
   const modesChange = (event, mode) => {
-    let mode_num = parseInt(mode);
-    setModes(mode_num);
+    let mode_n;
+    if (mode === null) {
+      mode_n = modes;
+    } else if (Number(modes) === 0 && Number(mode) === 1 && isWarn) {
+      setIsYellowWarn(true);
+      mode_n = modes;
+    } else {
+      mode_n = mode;
+    }
+    if (!(mode_num === mode_n)) {
+      mode_num = mode_n;
+    }
+    setModes(mode_n);
     if (isSub) {
-      modeSetTopic.publish({ x: mode_num, y: 0, z: 0 });
+      modeSetTopic.publish({ data: mode_n });
+    }
+  };
+
+  let sensor_warn = false;
+  let system_warn = false;
+
+  const warnDrop = (array, msg_num) => {
+    if (array.includes(1)) {
+      setWarnState(msg_num);
+      if (msg_num === 1) {
+        sensor_warn = true;
+      } else if (msg_num === 3) {
+        system_warn = true;
+      }
+      setIsWarn(true);
+      if (mode_num === 1) {
+        setIsRedWarn(true);
+      }
+    } else {
+      if (msg_num === 1) {
+        sensor_warn = false;
+      } else if (msg_num === 3) {
+        system_warn = false;
+      }
+      if (!sensor_warn && !system_warn) {
+        setWarnState(0);
+      } else if (!sensor_warn && system_warn) {
+        setWarnState(3);
+      } else if (sensor_warn && !system_warn) {
+        setWarnState(1);
+      }
+      setIsWarn(false);
+      setIsYellowWarn(false);
+      if (mode_num === 1) {
+        setIsRedWarn(false);
+      }
     }
   };
 
   if (!isSub && props.sub) {
     setIsSub(true);
-    modeTopic.subscribe(function (message) {
-      setModes(message.x);
-    });
 
-    diagTopic.subscribe(function (message) {
-      if (message.data.includes(1)) {
-        setWarnState(1);
+    modeTopic.subscribe(function (message) {
+      let mode = parseInt(message.data);
+      if (mode_num !== mode) {
+        mode_num = mode;
+      }
+      setModes(Number(mode));
+    });
+    sensorStateTopic.subscribe(function (message) {
+      warnDrop(message.data, 1);
+    });
+    systemStateTopic.subscribe(function (message) {
+      let temp = message.data;
+      warnDrop(temp, 3);
+      setSystemState(temp);
+    });
+    emergyStopTopic.subscribe(function (message) {
+      let emergy = Number(message.data);
+      if (emergy === 1) {
+        console.log("Emergency");
       }
     });
   }
@@ -61,11 +136,18 @@ const SetWarning = (props) => {
   if (isSub && !props.sub) {
     setIsSub(false);
     modeTopic.unsubscribe();
-    diagTopic.unsubscribe();
+    sensorStateTopic.unsubscribe();
+    systemStateTopic.unsubscribe();
+    emergyStopTopic.unsubscribe();
   }
 
   return (
     <>
+      <DropMessage
+        isRedWarn={isRedWarn}
+        isYellowWarn={isYellowWarn}
+        // setYellow={setYellow}
+      />
       <Grid item xs container spacing={2}>
         <Grid item xs={4}>
           <ToggleButtonGroup
@@ -80,16 +162,13 @@ const SetWarning = (props) => {
               Manual Mode
             </ToggleButton>
             <Box sx={{ mb: "0.8rem" }}></Box>
-            <ToggleButton className={classes.mode_toggle_button} value={1}>
+            <ToggleButton
+              className={classes.mode_toggle_button}
+              value={1}
+              disabled={isRedWarn}
+            >
               Autopilot Mode
             </ToggleButton>
-
-            {/* <ToggleButton className={classes.mode_toggle_button} value={2}>
-              Test Mode
-            </ToggleButton>
-            <ToggleButton className={classes.mode_toggle_button} value={3}>
-              License Mode
-            </ToggleButton> */}
           </ToggleButtonGroup>
         </Grid>
         <Grid item xs={4}>
@@ -100,7 +179,7 @@ const SetWarning = (props) => {
           <SystemState state={systemState} />
         </Grid>
         <Grid item xs={12}>
-          <Container className={classes.map} fullWidth>
+          <Container className={classes.map}>
             <DeckMap sub={props.sub} />
           </Container>
         </Grid>
@@ -112,6 +191,15 @@ const SetWarning = (props) => {
 export default SetWarning;
 
 /*
+
+
+<ToggleButton className={classes.mode_toggle_button} value={2}>
+  Test Mode
+</ToggleButton>
+<ToggleButton className={classes.mode_toggle_button} value={3}>
+  License Mode
+</ToggleButton> 
+
 import Warns from "./Warns";
 const btnStateTopic = new ROSLIB.Topic({
   ros: ros,
@@ -151,10 +239,10 @@ const [warns, setWarns] = useState([]);
 const funcState = (bool, value) =>{
     let array = warns;let array = warns;
     if(bool){if(!array.includes(value)){array.push(value);} setWarns(array);}
-    else if(!bool){if(array.includes(value)){array = array.filter(item=>item!==value);} setWarns(array); }
+    else if(!bool){if(array.includes(value)){array = array.filter(item=>item!=value);} setWarns(array); }
     console.log(array);
 };value);} setWarns(array);}
-    else if(!bool){if(array.includes(value)){array = array.filter(item=>item!==value);} setWarns(array); }
+    else if(!bool){if(array.includes(value)){array = array.filter(item=>item!=value);} setWarns(array); }
     console.log(array);
 };
 

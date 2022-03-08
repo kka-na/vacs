@@ -10,6 +10,7 @@ const WarnMessage = (element) => {
     "Stable State",
     "Sensor Anomalies Detected",
     "Take Over Request",
+    "System Anomalies Detected",
     "Another Anomalied Detected",
   ]);
   const [messageIdx, setMessageIdx] = useState(0);

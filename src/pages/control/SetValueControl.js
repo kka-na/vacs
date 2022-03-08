@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ROSLIB from "roslib";
 import { Grid, TextField, Box, Button } from "@material-ui/core";
-import ControlStyles from "./ControlStyles.ts";
+import ControlStyles from "./ControlStyles";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 
 const ros = new ROSLIB.Ros({

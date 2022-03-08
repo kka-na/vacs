@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ROSLIB from "roslib";
 import { Box, Grid } from "@material-ui/core";
-import SharedStyles from "./SharedStyles.ts";
+import SharedStyles from "./SharedStyles";
 import Gear from "../RosTopics/Gear";
 import SignalLights from "../RosTopics/SignalLight";
 import Battery from "../RosTopics/Battery";
@@ -10,27 +10,27 @@ const ros = new ROSLIB.Ros({ url: "ws://localhost:9090" });
 const velTopic = new ROSLIB.Topic({
   ros: ros,
   name: "/vel",
-  messageType: "geometry_msgs/Vector3",
+  messageType: "std_msgs/Int8",
 });
 const gearTopic = new ROSLIB.Topic({
   ros: ros,
   name: "/gear",
-  messageType: "geometry_msgs/Vector3",
+  messageType: "std_msgs/Int8",
 });
 const signalTopic = new ROSLIB.Topic({
   ros: ros,
   name: "/signal_light",
-  messageType: "geometry_msgs/Vector3",
+  messageType: "std_msgs/Int8",
 });
 const batteryTopic = new ROSLIB.Topic({
   ros: ros,
   name: "/battery",
-  messageType: "geometry_msgs/Vector3",
+  messageType: "std_msgs/Int8",
 });
 const carTempTopic = new ROSLIB.Topic({
   ros: ros,
   name: "/car_temperature",
-  messageType: "geometry_msgs/Vector3",
+  messageType: "std_msgs/Int8",
 });
 
 const SideRos = (props) => {
@@ -45,19 +45,19 @@ const SideRos = (props) => {
   if (!isSub && props.sub) {
     setIsSub(true);
     velTopic.subscribe(function (message) {
-      setReceiveVel(message.x);
+      setReceiveVel(message.data);
     });
     gearTopic.subscribe(function (message) {
-      setReceiveGear(message.x);
+      setReceiveGear(message.data);
     });
     signalTopic.subscribe(function (message) {
-      setReceiveSignal(message.x);
+      setReceiveSignal(message.data);
     });
     batteryTopic.subscribe(function (message) {
-      setReceiveBattery(message.x);
+      setReceiveBattery(message.data);
     });
     carTempTopic.subscribe(function (message) {
-      setReceiveCarTemp(message.x);
+      setReceiveCarTemp(message.data);
     });
   }
   if (isSub && !props.sub) {
