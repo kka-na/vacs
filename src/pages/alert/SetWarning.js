@@ -112,8 +112,12 @@ const SetWarning = (props) => {
 
     modeTopic.subscribe(function (message) {
       let mode = parseInt(message.data);
+      console.log(mode);
       if (mode_num !== mode) {
         mode_num = mode;
+      }
+      if (mode === 0) {
+        setIsRedWarn(false);
       }
       setModes(Number(mode));
     });
@@ -165,7 +169,7 @@ const SetWarning = (props) => {
             <ToggleButton
               className={classes.mode_toggle_button}
               value={1}
-              disabled={isRedWarn}
+              disabled={isWarn}
             >
               Autopilot Mode
             </ToggleButton>

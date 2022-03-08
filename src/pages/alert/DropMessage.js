@@ -23,7 +23,6 @@ const DropMessage = ({ isRedWarn, isYellowWarn }) => {
 
   useEffect(() => {
     if (isRedWarn) {
-      console.log("IsRed");
       setGIFs(red_gif);
       handleToggle();
     } else {
