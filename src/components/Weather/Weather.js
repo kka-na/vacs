@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core";
 const Styles = makeStyles((theme) => ({
   time: {
     color: "#fff",
-    fontSize: "18px",
+    fontSize: "20px",
   },
 }));
 

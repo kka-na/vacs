@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 export default makeStyles((theme) => ({
   map: {
-    height: "35rem",
+    height: "34rem",
     marginLeft: "-1.4rem",
     width: "100%",
   },
@@ -14,7 +14,7 @@ export default makeStyles((theme) => ({
   mode_toggle_button: {
     "&.MuiToggleButton-root": {
       fontFamily: "Rajdhani, sans-serif",
-      fontSize: "1.2rem",
+      fontSize: "1.6rem",
       height: "6.5rem",
       backgroundColor: "#0c1024",
       color: "#fff",

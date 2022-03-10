@@ -33,7 +33,7 @@ export default makeStyles((theme) => ({
   toggle_button: {
     "&.MuiToggleButton-root": {
       fontFamily: "Rajdhani, sans-serif",
-      fontSize: "1rem",
+      fontSize: "1.2rem",
       backgroundColor: "#0c1024",
       color: "#fff",
       borderRadius: "4px",
@@ -60,7 +60,7 @@ export default makeStyles((theme) => ({
   },
   pub_button: {
     fontFamily: "Rajdhani, sans-serif",
-    fontSize: "1rem",
+    fontSize: "1.2rem",
     backgroundColor: "#0c1024",
     color: "#fff",
     marginTop: "0.5rem",
@@ -80,7 +80,7 @@ export default makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     color: "#fff",
-    fontSize: "1.2em",
+    fontSize: "1.8em",
   },
   full_button: {
     marginTop: "1.2rem",
@@ -99,7 +99,7 @@ export default makeStyles((theme) => ({
     width: "100%",
     "& label": {
       color: "white",
-      fontSize: "0.8rem",
+      fontSize: "1.2rem",
     },
     "& label.Mui-focused": {
       color: "#3b7bea",
@@ -107,6 +107,7 @@ export default makeStyles((theme) => ({
     "& .MuiInputBase-root": {
       color: "white",
       height: "4rem",
+      fontSize: "1.2rem",
     },
     "& .MuiOutlinedInput-root": {
       "& fieldset": {

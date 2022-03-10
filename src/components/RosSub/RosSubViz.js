@@ -55,6 +55,7 @@ const RosSubViz = ({ addSub }) => {
       </Grid>
       <Grid item xs={1} className={classes.text}>
         <FormControlLabel
+          className={classes.text}
           control={
             <Checkbox style={{ color: "#fff" }} onChange={handleLogging} />
           }

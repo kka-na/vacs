@@ -48,7 +48,7 @@ export default makeStyles((theme) => ({
     display: "flex",
     verticalAlign: "middle",
     alignItems: "center",
-    fontSize: "1.2rem",
+    fontSize: "20px",
     color: "#fff",
   },
   stopwatch_text: {
@@ -56,7 +56,7 @@ export default makeStyles((theme) => ({
     verticalAlign: "middle",
     alignItems: "center",
     justifyContent: "center",
-    fontSize: "1.2rem",
+    fontSize: "1.5rem",
     color: "#fff",
   },
   mode_text: {
@@ -65,15 +65,21 @@ export default makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     color: "#fff",
-    fontSize: "1.2rem",
+    fontSize: "1.8rem",
   },
   side: {
     display: "flex",
     verticalAlign: "middle",
     justifyContent: "center",
     alignItems: "center",
+  },
+  vel_default: {
     color: "#fff",
-    fontSize: "1.2em",
+    fontSize: "2rem",
+  },
+  gear_default: {
+    color: "#fff",
+    fontSize: "2rem",
   },
   temp_text: {
     marginTop: "0.5rem",

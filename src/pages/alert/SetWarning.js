@@ -41,14 +41,10 @@ const SetWarning = (props) => {
   const [isSub, setIsSub] = useState(false);
   const [modes, setModes] = useState(0);
   const [warnState, setWarnState] = useState(0);
-  const [emergy, setEmergy] = useState(0);
   const [isWarn, setIsWarn] = useState(false);
   const [isRedWarn, setIsRedWarn] = useState(false);
   const [isYellowWarn, setIsYellowWarn] = useState(false);
   const [systemState, setSystemState] = useState([false, false, false]);
-  // const setYellow = (bool) => {
-  //   setIsYellowWarn(bool);
-  // };
 
   var mode_num = 0;
 
@@ -62,7 +58,7 @@ const SetWarning = (props) => {
     } else {
       mode_n = mode;
     }
-    if (!(mode_num === mode_n)) {
+    if (!mode_num !== mode_n) {
       mode_num = mode_n;
     }
     setModes(mode_n);
@@ -71,36 +67,55 @@ const SetWarning = (props) => {
     }
   };
 
-  let sensor_warn = false;
-  let system_warn = false;
+  let warns = [
+    { id: 0, value: false },
+    { id: 2, value: false },
+    { id: 3, value: false },
+  ];
+
+  function setElseMessage() {
+    if (!warns[1].value) {
+      if (warns[3].value) {
+        setWarnState(3);
+      } else if (warns[2].value) {
+        setWarnState(2);
+      }
+    } else if (!warns[3].value) {
+      if (warns[1].value) {
+        setWarnState(1);
+      } else if (warns[2].value) {
+        setWarnState(2);
+      }
+    } else if (!warns[2].value) {
+      if (warns[1].value) {
+        setWarnState(1);
+      } else if (warns[3].value) {
+        setWarnState(3);
+      }
+    }
+  }
 
   const warnDrop = (array, msg_num) => {
     if (array.includes(1)) {
       setWarnState(msg_num);
-      if (msg_num === 1) {
-        sensor_warn = true;
-      } else if (msg_num === 3) {
-        system_warn = true;
+      warns[msg_num].value = true;
+      if (warns.some((w) => w.value === true)) {
+        //There are more than one error within sensor, system, estop
+        setIsWarn(true);
       }
-      setIsWarn(true);
       if (mode_num === 1) {
+        // There are any error and when in Autopilot mode
         setIsRedWarn(true);
       }
     } else {
-      if (msg_num === 1) {
-        sensor_warn = false;
-      } else if (msg_num === 3) {
-        system_warn = false;
-      }
-      if (!sensor_warn && !system_warn) {
+      warns[msg_num].value = false;
+      if (warns.every((w) => w.value === false)) {
         setWarnState(0);
-      } else if (!sensor_warn && system_warn) {
-        setWarnState(3);
-      } else if (sensor_warn && !system_warn) {
-        setWarnState(1);
+        setIsWarn(false);
+        setIsYellowWarn(false);
+      } else {
+        setElseMessage();
       }
-      setIsWarn(false);
-      setIsYellowWarn(false);
       if (mode_num === 1) {
         setIsRedWarn(false);
       }
@@ -109,10 +124,8 @@ const SetWarning = (props) => {
 
   if (!isSub && props.sub) {
     setIsSub(true);
-
     modeTopic.subscribe(function (message) {
       let mode = parseInt(message.data);
-      console.log(mode);
       if (mode_num !== mode) {
         mode_num = mode;
       }
@@ -131,8 +144,10 @@ const SetWarning = (props) => {
     });
     emergyStopTopic.subscribe(function (message) {
       let emergy = Number(message.data);
+      let temp = [];
+      temp.push(emergy);
       if (emergy === 1) {
-        console.log("Emergency");
+        warnDrop(temp, 2);
       }
     });
   }
@@ -147,11 +162,7 @@ const SetWarning = (props) => {
 
   return (
     <>
-      <DropMessage
-        isRedWarn={isRedWarn}
-        isYellowWarn={isYellowWarn}
-        // setYellow={setYellow}
-      />
+      <DropMessage isRedWarn={isRedWarn} isYellowWarn={isYellowWarn} />
       <Grid item xs container spacing={2}>
         <Grid item xs={4}>
           <ToggleButtonGroup

@@ -3,6 +3,12 @@ import Button from "@mui/material/Button";
 import maintheme from "../../mainTheme";
 
 function Diag(element) {
+  let button_color;
+  if (element.error !== undefined) {
+    button_color = element.error ? "error" : "success";
+  } else {
+    button_color = "secondary";
+  }
   return (
     <ThemeProvider theme={maintheme}>
       <Button
@@ -13,7 +19,7 @@ function Diag(element) {
           width: 75,
           height: 50,
         }}
-        color={element.error ? "error" : "success"}
+        color={button_color}
         variant="contained"
       >
         {element.name}

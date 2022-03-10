@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ROSLIB from "roslib";
 import AlertStyles from "./AlertStyles";
 import { Paper } from "@mui/material";
@@ -18,33 +18,47 @@ function SetDiag(props) {
   const [error, setError] = useState([false, false, false, false, false]);
   const [trigger, setTrigger] = useState(0);
 
-  useEffect(() => {
-    if (!isSub && props.sub) {
-      setIsSub(true);
-      sensorStateTopic.subscribe(function (message) {
-        let temp = error;
-        message.data.map((element, index) => {
-          temp[index] = element == 1 ? true : false;
-        });
-        setTrigger((trigger) => trigger + 1);
-        setError(temp);
+  if (!isSub && props.sub) {
+    setIsSub(true);
+    sensorStateTopic.subscribe(function (message) {
+      let temp = error;
+      message.data.map((element, index) => {
+        temp[index] = element == 1 ? true : false;
       });
-    }
-    if (isSub && !props.sub) {
-      setIsSub(false);
-      sensorStateTopic.unsubscribe();
-    }
-  }, [props.sub]);
+      setTrigger((trigger) => trigger + 1);
+      setError(temp);
+    });
+  }
+  if (isSub && !props.sub) {
+    setIsSub(false);
+    sensorStateTopic.unsubscribe();
+  }
 
-  return (
-    <Paper className={classes.diag_paper}>
-      <Diag x="35%" y="43%" name="Wide Camera" error={error[0]}></Diag>
-      <Diag x="54%" y="43%" name="Narrow Camera" error={error[1]}></Diag>
-      <Diag x="44.5%" y="55%" name="LiDAR" error={error[2]}></Diag>
-      <Diag x="44.5%" y="70%" name="IMU" error={error[3]}></Diag>
-      <Diag x="44.5%" y="85%" name="INS" error={error[4]}></Diag>
-    </Paper>
-  );
+  const renderButtons = () => {
+    if (props.sub) {
+      return (
+        <Paper className={classes.diag_paper}>
+          <Diag x="35%" y="43%" name="Wide Camera" error={error[0]}></Diag>
+          <Diag x="54%" y="43%" name="Narrow Camera" error={error[1]}></Diag>
+          <Diag x="44.5%" y="55%" name="LiDAR" error={error[2]}></Diag>
+          <Diag x="44.5%" y="70%" name="IMU" error={error[3]}></Diag>
+          <Diag x="44.5%" y="85%" name="INS" error={error[4]}></Diag>
+        </Paper>
+      );
+    } else {
+      return (
+        <Paper className={classes.diag_paper}>
+          <Diag x="35%" y="43%" name="Wide Camera"></Diag>
+          <Diag x="54%" y="43%" name="Narrow Camera"></Diag>
+          <Diag x="44.5%" y="55%" name="LiDAR"></Diag>
+          <Diag x="44.5%" y="70%" name="IMU"></Diag>
+          <Diag x="44.5%" y="85%" name="INS"></Diag>
+        </Paper>
+      );
+    }
+  };
+
+  return <>{renderButtons()}</>;
 }
 
 export default SetDiag;
