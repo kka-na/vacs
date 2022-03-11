@@ -17,7 +17,7 @@ export default makeStyles((theme) => ({
   toggle_button: {
     "&.MuiToggleButton-root": {
       fontFamily: "Rajdhani, sans-serif",
-      fontSize: "1rem",
+      fontSize: "1.2rem",
       backgroundColor: "#0c1024",
       color: "#fff",
       height: "4rem",

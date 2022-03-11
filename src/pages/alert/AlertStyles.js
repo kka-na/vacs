@@ -42,6 +42,18 @@ export default makeStyles((theme) => ({
   },
   diag_paper: {
     background:
+      'url("/gifs/red_car.gif") no-repeat center center, linear-gradient(rgba(12,16,36,1), rgba(12,16,36,1))',
+    position: "relative",
+    height: "100%",
+  },
+  diag_paper_stop: {
+    background:
+      'url("/pngs/red_car_lane.png") no-repeat center center, linear-gradient(rgba(12,16,36,1), rgba(12,16,36,1))',
+    position: "relative",
+    height: "100%",
+  },
+  diag_paper_undefined: {
+    background:
       'url("/pngs/red_car.png") no-repeat center center, linear-gradient(rgba(12,16,36,1), rgba(12,16,36,1))',
     position: "relative",
     height: "100%",

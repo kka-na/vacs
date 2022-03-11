@@ -16,8 +16,10 @@ function Diag(element) {
           position: "absolute",
           top: element.y,
           left: element.x,
-          width: 75,
-          height: 50,
+          width: 100,
+          height: 70,
+          fontSize: "1.2rem",
+          fontWeight: "600",
         }}
         color={button_color}
         variant="contained"

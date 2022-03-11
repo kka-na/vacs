@@ -68,28 +68,28 @@ const SetWarning = (props) => {
   };
 
   let warns = [
-    { id: 0, value: false },
+    { id: 1, value: false },
     { id: 2, value: false },
     { id: 3, value: false },
   ];
 
   function setElseMessage() {
-    if (!warns[1].value) {
-      if (warns[3].value) {
+    if (!warns[0].value) {
+      if (warns[2].value) {
         setWarnState(3);
-      } else if (warns[2].value) {
-        setWarnState(2);
-      }
-    } else if (!warns[3].value) {
-      if (warns[1].value) {
-        setWarnState(1);
-      } else if (warns[2].value) {
+      } else if (warns[1].value) {
         setWarnState(2);
       }
     } else if (!warns[2].value) {
-      if (warns[1].value) {
+      if (warns[0].value) {
         setWarnState(1);
-      } else if (warns[3].value) {
+      } else if (warns[1].value) {
+        setWarnState(2);
+      }
+    } else if (!warns[1].value) {
+      if (warns[0].value) {
+        setWarnState(1);
+      } else if (warns[2].value) {
         setWarnState(3);
       }
     }
@@ -98,7 +98,7 @@ const SetWarning = (props) => {
   const warnDrop = (array, msg_num) => {
     if (array.includes(1)) {
       setWarnState(msg_num);
-      warns[msg_num].value = true;
+      warns[msg_num - 1].value = true;
       if (warns.some((w) => w.value === true)) {
         //There are more than one error within sensor, system, estop
         setIsWarn(true);
@@ -108,7 +108,7 @@ const SetWarning = (props) => {
         setIsRedWarn(true);
       }
     } else {
-      warns[msg_num].value = false;
+      warns[msg_num - 1].value = false;
       if (warns.every((w) => w.value === false)) {
         setWarnState(0);
         setIsWarn(false);

@@ -10,7 +10,6 @@ export default makeStyles((theme) => ({
     verticalAlign: "middle",
     justifyContent: "center",
     alignItems: "center",
-    fontSize: "3.5rem",
   },
   warn_card: {
     backgroundColor: "#fe86e3",
@@ -21,6 +20,5 @@ export default makeStyles((theme) => ({
     verticalAlign: "middle",
     justifyContent: "center",
     alignItems: "center",
-    fontSize: "3.5rem",
   },
 }));

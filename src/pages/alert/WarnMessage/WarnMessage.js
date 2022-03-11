@@ -24,7 +24,9 @@ const WarnMessage = (element) => {
   return (
     <Card className={styleClass}>
       <CardContent>
-        <Typography sx={{ fontSize: 20 }}>{messages[messageIdx]}</Typography>
+        <Typography sx={{ fontSize: 23, align: "center" }}>
+          {messages[messageIdx]}
+        </Typography>
       </CardContent>
     </Card>
   );

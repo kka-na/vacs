@@ -1,6 +1,7 @@
 import ContainerDimensions from "react-container-dimensions";
 import ROSLIB from "roslib";
 import Map, { Marker } from "react-map-gl";
+import { makeStyles } from "@material-ui/core";
 import { useState } from "react";
 
 const MAPBOX_ACCESS_TOKEN =
@@ -14,7 +15,17 @@ const gpsTopic = new ROSLIB.Topic({
   messageType: "geometry_msgs/Vector3",
 });
 
+const Styles = makeStyles((theme) => ({
+  marker: {
+    backgroundColor: "#C81F30",
+    width: "1.8rem",
+    height: "1.8rem",
+    borderRadius: "50%",
+  },
+}));
+
 export default function DeckMap(props) {
+  const classes = Styles();
   const [isSub, setIsSub] = useState(false);
   const [position, setPosition] = useState({
     latitude: 37.450585,
@@ -56,7 +67,8 @@ export default function DeckMap(props) {
         }}
       >
         <Marker {...position}>
-          <img src="/pngs/red_car.png" width="25px" height="50px" />
+          <div className={classes.marker}></div>
+          {/* <img src="/pngs/red_car.png" width="25px" height="50px" /> */}
         </Marker>
       </Map>
     </ContainerDimensions>

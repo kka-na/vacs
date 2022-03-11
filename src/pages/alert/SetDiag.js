@@ -11,12 +11,18 @@ const sensorStateTopic = new ROSLIB.Topic({
   name: "/sensor_state",
   messageType: "std_msgs/Int8MultiArray",
 });
+const velTopic = new ROSLIB.Topic({
+  ros: ros,
+  name: "/can_vel",
+  messageType: "std_msgs/Int8",
+});
 
 function SetDiag(props) {
   const classes = AlertStyles();
   const [isSub, setIsSub] = useState(false);
   const [error, setError] = useState([false, false, false, false, false]);
   const [trigger, setTrigger] = useState(0);
+  const [redCarClass, setRedCarClass] = useState(classes.diag_paper_undefined);
 
   if (!isSub && props.sub) {
     setIsSub(true);
@@ -28,31 +34,40 @@ function SetDiag(props) {
       setTrigger((trigger) => trigger + 1);
       setError(temp);
     });
+    velTopic.subscribe(function (message) {
+      if (message.data > 0) {
+        setRedCarClass(classes.diag_paper);
+      } else if (message.data <= 0) {
+        setRedCarClass(classes.diag_paper_stop);
+      }
+    });
   }
   if (isSub && !props.sub) {
     setIsSub(false);
     sensorStateTopic.unsubscribe();
+    velTopic.unsubscribe();
+    setRedCarClass(classes.diag_paper_undefined);
   }
 
   const renderButtons = () => {
     if (props.sub) {
       return (
-        <Paper className={classes.diag_paper}>
-          <Diag x="35%" y="43%" name="Wide Camera" error={error[0]}></Diag>
-          <Diag x="54%" y="43%" name="Narrow Camera" error={error[1]}></Diag>
-          <Diag x="44.5%" y="55%" name="LiDAR" error={error[2]}></Diag>
-          <Diag x="44.5%" y="70%" name="IMU" error={error[3]}></Diag>
-          <Diag x="44.5%" y="85%" name="INS" error={error[4]}></Diag>
+        <Paper className={redCarClass}>
+          <Diag x="32%" y="41%" name="Wide Camera" error={error[0]}></Diag>
+          <Diag x="52.5%" y="41%" name="Narrow Camera" error={error[1]}></Diag>
+          <Diag x="42.5%" y="53%" name="LiDAR" error={error[2]}></Diag>
+          <Diag x="42.5%" y="68%" name="IMU" error={error[3]}></Diag>
+          <Diag x="42.5%" y="83%" name="INS" error={error[4]}></Diag>
         </Paper>
       );
     } else {
       return (
-        <Paper className={classes.diag_paper}>
-          <Diag x="35%" y="43%" name="Wide Camera"></Diag>
-          <Diag x="54%" y="43%" name="Narrow Camera"></Diag>
-          <Diag x="44.5%" y="55%" name="LiDAR"></Diag>
-          <Diag x="44.5%" y="70%" name="IMU"></Diag>
-          <Diag x="44.5%" y="85%" name="INS"></Diag>
+        <Paper className={redCarClass}>
+          <Diag x="32%" y="41%" name="Wide Camera"></Diag>
+          <Diag x="52.5%" y="41%" name="Narrow Camera"></Diag>
+          <Diag x="42.5%" y="53%" name="LiDAR"></Diag>
+          <Diag x="42.5%" y="68%" name="IMU"></Diag>
+          <Diag x="42.5%" y="83%" name="INS"></Diag>
         </Paper>
       );
     }
