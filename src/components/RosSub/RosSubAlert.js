@@ -19,20 +19,23 @@ const RosSubAlert = ({ addSub }) => {
   const classes = SharedStyles();
   const [receiveMode, setReceiveMode] = useState([]);
   const [sub, setSub] = useState(false);
-  const stateRef = useRef();
 
   const handleChange = (event, newSub) => {
-    setSub(newSub);
-    if (newSub) {
+    let sub_n;
+    if (newSub === null) {
+      sub_n = sub;
+    } else if (newSub) {
+      sub_n = newSub;
       addSub(true);
-      let temp = 0;
       modeTopic.subscribe(function (message) {
         setReceiveMode(message.data);
       });
-    } else {
+    } else if (!newSub) {
+      sub_n = newSub;
       addSub(false);
       modeTopic.unsubscribe();
     }
+    setSub(sub_n);
   };
 
   return (
@@ -50,7 +53,7 @@ const RosSubAlert = ({ addSub }) => {
           className={classes.toggle_button_group}
           value={sub}
           exclusive
-          onChange={(e, v) => handleChange(e, v)}
+          onChange={handleChange}
           fullWidth
         >
           <ToggleButton className={classes.toggle_button} value={true}>

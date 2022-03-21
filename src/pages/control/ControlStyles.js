@@ -37,22 +37,16 @@ export default makeStyles((theme) => ({
       height: "4rem",
       borderRadius: "4px",
       boxShadow: "5px 5px 7px #05060e, -5px -5px 7px #131a3a",
-      "&:hover": {
-        backgroundColor: "#3b7bea",
-        borderRadius: "4px",
-        boxShadow: "5px 5px 7px #05060e, -5px -5px 7px #131a3a",
-        color: "#fff",
-      },
       "&.Mui-selected": {
         backgroundColor: "#85def5",
         borderRadius: "4px",
         boxShadow: "5px 5px 7px #05060e, -5px -5px 7px #131a3a",
         color: "#0c1024",
         "&:hover": {
-          backgroundColor: "#0c1024",
+          backgroundColor: "#85def5",
           borderRadius: "4px",
           boxShadow: "5px 5px 7px #05060e, -5px -5px 7px #131a3a",
-          color: "#3b7bea",
+          color: "#0c1024",
         },
       },
     },
@@ -70,7 +64,6 @@ export default makeStyles((theme) => ({
       fontSize: "1.2rem",
       backgroundColor: "#0c1024",
       color: "#fff",
-
       borderRadius: "4px",
       boxShadow: "5px 5px 7px #05060e, -5px -5px 7px #131a3a",
       "&:hover": {
@@ -126,22 +119,16 @@ export default makeStyles((theme) => ({
       height: "4rem",
       borderRadius: "4px",
       boxShadow: "5px 5px 7px #05060e, -5px -5px 7px #131a3a",
-      "&:hover": {
-        backgroundColor: "#3b7bea",
-        borderRadius: "4px",
-        boxShadow: "5px 5px 7px #05060e, -5px -5px 7px #131a3a",
-        color: "#fff",
-      },
       "&.Mui-selected": {
         backgroundColor: "#85def5",
         borderRadius: "4px",
         boxShadow: "5px 5px 7px #05060e, -5px -5px 7px #131a3a",
         color: "#0c1024",
         "&:hover": {
-          backgroundColor: "#0c1024",
+          backgroundColor: "#85def5",
           borderRadius: "4px",
           boxShadow: "5px 5px 7px #05060e, -5px -5px 7px #131a3a",
-          color: "#3b7bea",
+          color: "#0c1024",
         },
       },
     },

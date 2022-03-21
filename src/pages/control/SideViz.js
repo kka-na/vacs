@@ -9,7 +9,7 @@ import DeckMap from "../../components/DeckMap/DeckMap";
 const ros = new ROSLIB.Ros({ url: "ws://localhost:9090" });
 const cam0Topic = new ROSLIB.Topic({
   ros: ros,
-  name: "/img_compressed",
+  name: "/gmsl_camera/dev/video1/compressed",
   messageType: "sensor_msgs/CompressedImage",
 });
 const gpsTopic = new ROSLIB.Topic({

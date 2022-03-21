@@ -8,6 +8,7 @@ const DropMessage = ({ isRedWarn, isYellowWarn }) => {
   const [open, setOpen] = useState(0);
   const [play, setPlay] = useState(Sound.status.STOPPED);
   const [gifs, setGIFs] = useState();
+  const [redWarn, setRedWarn] = useState();
   let red_gif = "/gifs/red.gif";
   let blue_gif = "/gifs/blue.gif";
 
@@ -15,6 +16,7 @@ const DropMessage = ({ isRedWarn, isYellowWarn }) => {
     setOpen(false);
     setPlay(Sound.status.STOPPED);
   };
+
   const handleToggle = () => {
     setOpen(!open);
     setPlay(Sound.status.PLAYING);
@@ -25,8 +27,10 @@ const DropMessage = ({ isRedWarn, isYellowWarn }) => {
     if (isRedWarn) {
       setGIFs(red_gif);
       handleToggle();
+      setRedWarn(isRedWarn);
     } else {
       handleClose();
+      setRedWarn(isRedWarn);
     }
   }, [isRedWarn]);
 
@@ -43,7 +47,7 @@ const DropMessage = ({ isRedWarn, isYellowWarn }) => {
     <Backdrop
       sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
       open={open}
-      onClick={handleClose}
+      // onClick={handleClose}
     >
       <img src={gifs} alt="placeholder" />
       <Sound url="/wavs/alarm.wav" playStatus={play} loop={true} />

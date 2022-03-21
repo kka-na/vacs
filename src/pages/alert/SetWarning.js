@@ -8,6 +8,7 @@ import WarnMessage from "./WarnMessage/WarnMessage";
 import SystemState from "./SystemState";
 import SetTargetVelocity from "./SetTartgetVelocity/SetTargetVelocity";
 import DropMessage from "./DropMessage";
+import SetGPSAcc from "./SetGPSAcc";
 
 const ros = new ROSLIB.Ros({ url: "ws://localhost:9090" });
 const modeTopic = new ROSLIB.Topic({
@@ -35,6 +36,11 @@ const emergyStopTopic = new ROSLIB.Topic({
   name: "/estop",
   messageType: "std_msgs/Int8",
 });
+const gpsAccTopic = new ROSLIB.Topic({
+  ros: ros,
+  name: "/gps_accuracy",
+  messageType: "geometry_msgs/Point",
+});
 
 const SetWarning = (props) => {
   const classes = AlertStyles();
@@ -45,6 +51,7 @@ const SetWarning = (props) => {
   const [isRedWarn, setIsRedWarn] = useState(false);
   const [isYellowWarn, setIsYellowWarn] = useState(false);
   const [systemState, setSystemState] = useState([false, false, false]);
+  const [gpsAccuracy, setGPSAccuracy] = useState([0, 0]);
 
   var mode_num = 0;
 
@@ -58,7 +65,7 @@ const SetWarning = (props) => {
     } else {
       mode_n = mode;
     }
-    if (!mode_num !== mode_n) {
+    if (mode_num !== mode_n) {
       mode_num = mode_n;
     }
     setModes(mode_n);
@@ -68,36 +75,39 @@ const SetWarning = (props) => {
   };
 
   let warns = [
-    { id: 1, value: false },
-    { id: 2, value: false },
-    { id: 3, value: false },
+    { id: 1, value: false }, //Sensor Anomalies
+    { id: 2, value: false }, //Emergy Stop
+    { id: 3, value: false }, //System Anomalies
   ];
 
   function setElseMessage() {
     if (!warns[0].value) {
       if (warns[2].value) {
-        setWarnState(3);
+        setWarnState(warns[2].id);
       } else if (warns[1].value) {
-        setWarnState(2);
+        setWarnState(warns[1].id);
       }
     } else if (!warns[2].value) {
       if (warns[0].value) {
-        setWarnState(1);
+        setWarnState(warns[0].id);
       } else if (warns[1].value) {
-        setWarnState(2);
+        setWarnState(warns[1].id);
       }
     } else if (!warns[1].value) {
       if (warns[0].value) {
-        setWarnState(1);
+        setWarnState(warns[0].id);
       } else if (warns[2].value) {
-        setWarnState(3);
+        setWarnState(warns[2].id);
       }
     }
   }
 
+  var warn_num = 0;
+
   const warnDrop = (array, msg_num) => {
     if (array.includes(1)) {
       setWarnState(msg_num);
+      warn_num = msg_num;
       warns[msg_num - 1].value = true;
       if (warns.some((w) => w.value === true)) {
         //There are more than one error within sensor, system, estop
@@ -111,6 +121,7 @@ const SetWarning = (props) => {
       warns[msg_num - 1].value = false;
       if (warns.every((w) => w.value === false)) {
         setWarnState(0);
+        warn_num = 0;
         setIsWarn(false);
         setIsYellowWarn(false);
       } else {
@@ -129,7 +140,8 @@ const SetWarning = (props) => {
       if (mode_num !== mode) {
         mode_num = mode;
       }
-      if (mode === 0) {
+      console.log(warn_num);
+      if (mode === 0 && warn_num === 0) {
         setIsRedWarn(false);
       }
       setModes(Number(mode));
@@ -150,6 +162,9 @@ const SetWarning = (props) => {
         warnDrop(temp, 2);
       }
     });
+    gpsAccTopic.subscribe(function (message) {
+      setGPSAccuracy(message);
+    });
   }
 
   if (isSub && !props.sub) {
@@ -158,6 +173,7 @@ const SetWarning = (props) => {
     sensorStateTopic.unsubscribe();
     systemStateTopic.unsubscribe();
     emergyStopTopic.unsubscribe();
+    gpsAccTopic.unsubscribe();
   }
 
   return (
@@ -193,8 +209,12 @@ const SetWarning = (props) => {
           <WarnMessage type={warnState} />
           <SystemState state={systemState} />
         </Grid>
+        <Grid item xs={8}></Grid>
+        <Grid item xs={4}>
+          <SetGPSAcc state={gpsAccuracy} />
+        </Grid>
         <Grid item xs={12}>
-          <Container className={classes.map}>
+          <Container className={classes.map} maxWidth="lg">
             <DeckMap sub={props.sub} />
           </Container>
         </Grid>

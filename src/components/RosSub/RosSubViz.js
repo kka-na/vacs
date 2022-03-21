@@ -35,13 +35,18 @@ const RosSubViz = ({ addSub }) => {
   }, [sub]);
 
   const handleChange = (event, newSub) => {
-    setSub(newSub);
-    if (newSub) {
+    let sub_n;
+    if (newSub === null) {
+      sub_n = sub;
+    } else if (newSub) {
+      sub_n = newSub;
       setTime(0);
       addSub(true);
-    } else {
+    } else if (!newSub) {
+      sub_n = newSub;
       addSub(false);
     }
+    setSub(sub_n);
   };
 
   return (

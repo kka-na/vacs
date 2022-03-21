@@ -2,8 +2,8 @@ import { makeStyles } from "@material-ui/core";
 
 export default makeStyles((theme) => ({
   map: {
-    height: "34rem",
-    marginLeft: "-1.4rem",
+    height: "30rem",
+    padding: "0",
     width: "100%",
   },
   mode_toggle_button_group: {
@@ -20,22 +20,16 @@ export default makeStyles((theme) => ({
       color: "#fff",
       borderRadius: "4px",
       boxShadow: "5px 5px 7px #05060e, -5px -5px 7px #131a3a",
-      "&:hover": {
-        backgroundColor: "#3b7bea",
-        borderRadius: "4px",
-        boxShadow: "5px 5px 7px #05060e, -5px -5px 7px #131a3a",
-        color: "#fff",
-      },
       "&.Mui-selected": {
         backgroundColor: "#85def5",
         borderRadius: "4px",
         boxShadow: "5px 5px 7px #05060e, -5px -5px 7px #131a3a",
         color: "#0c1024",
         "&:hover": {
-          backgroundColor: "#0c1024",
+          backgroundColor: "#85def5",
           borderRadius: "4px",
           boxShadow: "5px 5px 7px #05060e, -5px -5px 7px #131a3a",
-          color: "#3b7bea",
+          color: "#0c1024",
         },
       },
     },
