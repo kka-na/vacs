@@ -20,7 +20,7 @@ export default makeStyles((theme) => ({
   },
   card_lidar: {
     color: "#fffff3",
-    height: "33rem",
+    height: "30rem",
     boxShadow: "5px 5px 7px #05060e",
   },
   toggle_button_group: {

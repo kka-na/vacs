@@ -234,7 +234,7 @@ const SetValueViz = (props) => {
           BTN
         </ToggleButton>
       </ToggleButtonGroup>
-      <ToggleButtonGroup
+      {/* <ToggleButtonGroup
         value={btns}
         onChange={btnChange}
         className={classes.toggle_button_group}
@@ -246,7 +246,7 @@ const SetValueViz = (props) => {
         <ToggleButton className={classes.toggle_button} value="btn4">
           BTN
         </ToggleButton>
-      </ToggleButtonGroup>
+      </ToggleButtonGroup> */}
       <Grid item xs className={classes.input_grid}>
         <TextField
           label="SWA(current)"

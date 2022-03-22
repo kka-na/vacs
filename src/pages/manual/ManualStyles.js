@@ -4,7 +4,6 @@ export default makeStyles((theme) => ({
   grid: {
     display: "flex",
     marginTop: "0.5rem",
-    justifyContent: "center",
     alignItems: "center",
     color: "#fff",
     fontSize: "1.5rem",
@@ -15,7 +14,7 @@ export default makeStyles((theme) => ({
     boxShadow: "none",
   },
   media: {
-    width: "95%",
+    width: "80%",
   },
   name: {
     backgroundColor: "#0c1024",
