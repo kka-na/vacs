@@ -39,7 +39,7 @@ Control Mode
 <img src="/public/pngs/control.png"/>
 
 <p align="left">
-	<img width="200" src="/public/pngs/cvlab.png">
-	<img width="200" src="/public/pngs/aeye.png">
-	<img width="200" src="/public/pngs/inha.png">
+	<img height="100" src="/public/pngs/cvlab.png">
+	<img height="100" src="/public/pngs/aeye.png">
+	<img height="100" src="/public/pngs/inha.png">
 </p>
