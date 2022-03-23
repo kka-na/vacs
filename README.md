@@ -38,3 +38,8 @@ Control Mode
 
 <img src="/public/pngs/control.png"/>
 
+<p align="center">
+	<img src="/public/pngs/cvlab.png">
+	<img src="/public/pngs/aeye.png">
+	<img src="/public/pngs/inha.png">
+</p>
