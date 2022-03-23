@@ -23,7 +23,7 @@ function SetGPSAcc(element) {
       </Grid>
       <Grid xs={6}>
         <div style={{ color: "#fff", fontSize: "18px" }}>
-          GPS Accuracy : {acc}%
+          GPS Accuracy : {acc} m
         </div>
       </Grid>
     </Grid>
