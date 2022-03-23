@@ -124,11 +124,11 @@ const SetWarning = (props) => {
         warn_num = 0;
         setIsWarn(false);
         setIsYellowWarn(false);
+        if (mode_num === 1) {
+          setIsRedWarn(false);
+        }
       } else {
         setElseMessage();
-      }
-      if (mode_num === 1) {
-        setIsRedWarn(false);
       }
     }
   };
