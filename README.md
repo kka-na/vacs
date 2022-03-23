@@ -1,5 +1,3 @@
-# VACS
-
 <p align="center">
   <img width="200" height="200" src="/src/vacs.svg"/>
 </p>
@@ -10,14 +8,25 @@
 
 In the project directory, you can run :
 
-### 'npm install'
+```
+npm install
+```
 
 Installation libraries.
 
-### 'npm start'
+```
+npm start
+```
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
+
+## Usage
+
+<img src="/public/pngs/visualization.png"/>
+<img src="/public/pngs/alert.png"/>
+<img src="/public/pngs/manual.png"/>
+
