@@ -66,6 +66,7 @@ export default makeStyles((theme) => ({
     verticalAlign: "middle",
     justifyContent: "center",
     alignItems: "center",
+    alignContent: "center",
   },
   vel_default: {
     color: "#fff",
@@ -80,5 +81,12 @@ export default makeStyles((theme) => ({
   },
   empty: {
     paddingTop: "10em",
+  },
+  gps_acc: {
+    display: "relative",
+    verticalAlign: "middle",
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
   },
 }));

@@ -8,7 +8,6 @@ import WarnMessage from "./WarnMessage/WarnMessage";
 import SystemState from "./SystemState";
 import SetTargetVelocity from "./SetTartgetVelocity/SetTargetVelocity";
 import DropMessage from "./DropMessage";
-import SetGPSAcc from "./SetGPSAcc";
 
 const ros = new ROSLIB.Ros({ url: "ws://localhost:9090" });
 const modeTopic = new ROSLIB.Topic({
@@ -36,11 +35,6 @@ const emergyStopTopic = new ROSLIB.Topic({
   name: "/estop",
   messageType: "std_msgs/Int8",
 });
-const gpsAccTopic = new ROSLIB.Topic({
-  ros: ros,
-  name: "/gps_accuracy",
-  messageType: "geometry_msgs/Point",
-});
 
 const SetWarning = (props) => {
   const classes = AlertStyles();
@@ -51,7 +45,6 @@ const SetWarning = (props) => {
   const [isRedWarn, setIsRedWarn] = useState(false);
   const [isYellowWarn, setIsYellowWarn] = useState(false);
   const [systemState, setSystemState] = useState([false, false, false]);
-  const [gpsAccuracy, setGPSAccuracy] = useState([0, 0]);
 
   var mode_num = 0;
 
@@ -162,9 +155,6 @@ const SetWarning = (props) => {
         warnDrop(temp, 2);
       }
     });
-    gpsAccTopic.subscribe(function (message) {
-      setGPSAccuracy(message);
-    });
   }
 
   if (isSub && !props.sub) {
@@ -173,7 +163,6 @@ const SetWarning = (props) => {
     sensorStateTopic.unsubscribe();
     systemStateTopic.unsubscribe();
     emergyStopTopic.unsubscribe();
-    gpsAccTopic.unsubscribe();
   }
 
   return (
@@ -208,10 +197,6 @@ const SetWarning = (props) => {
         <Grid item xs={4}>
           <WarnMessage type={warnState} />
           <SystemState state={systemState} />
-        </Grid>
-        <Grid item xs={8}></Grid>
-        <Grid item xs={4}>
-          <SetGPSAcc state={gpsAccuracy} />
         </Grid>
         <Grid item xs={12}>
           <Container className={classes.map} maxWidth="lg">

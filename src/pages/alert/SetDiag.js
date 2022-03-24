@@ -56,7 +56,7 @@ function SetDiag(props) {
           <Diag x="32%" y="41%" name="Wide Camera" error={error[0]}></Diag>
           <Diag x="52.5%" y="41%" name="Narrow Camera" error={error[1]}></Diag>
           <Diag x="42.5%" y="53%" name="LiDAR" error={error[2]}></Diag>
-          <Diag x="42.5%" y="68%" name="IMU" error={error[3]}></Diag>
+          <Diag x="42.5%" y="68%" name="GPS" error={error[3]}></Diag>
           <Diag x="42.5%" y="83%" name="INS" error={error[4]}></Diag>
         </Paper>
       );
@@ -66,7 +66,7 @@ function SetDiag(props) {
           <Diag x="32%" y="41%" name="Wide Camera"></Diag>
           <Diag x="52.5%" y="41%" name="Narrow Camera"></Diag>
           <Diag x="42.5%" y="53%" name="LiDAR"></Diag>
-          <Diag x="42.5%" y="68%" name="IMU"></Diag>
+          <Diag x="42.5%" y="68%" name="GPS"></Diag>
           <Diag x="42.5%" y="83%" name="INS"></Diag>
         </Paper>
       );

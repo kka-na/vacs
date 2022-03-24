@@ -24,6 +24,12 @@ function MorphismButton(element) {
     class_name = classes.pink33;
   } else if (element.class_name === "purple33") {
     class_name = classes.purple33;
+  } else if (element.class_name === "square_basic") {
+    class_name = classes.square_basic;
+  } else if (element.class_name === "square_good") {
+    class_name = classes.square_good;
+  } else if (element.class_name === "square_not") {
+    class_name = classes.square_not;
   }
   return (
     <Button className={class_name} variant="contained">

@@ -5,6 +5,7 @@ import SharedStyles from "./SharedStyles";
 import Gear from "../RosTopics/Gear";
 import SignalLights from "../RosTopics/SignalLight";
 import Battery from "../RosTopics/Battery";
+import GPSAccuracy from "../RosTopics/GPSAccuracy";
 
 const ros = new ROSLIB.Ros({ url: "ws://localhost:9090" });
 const velTopic = new ROSLIB.Topic({
@@ -33,6 +34,12 @@ const gearTopic = new ROSLIB.Topic({
 //   messageType: "std_msgs/Int8",
 // });
 
+const gpsAccTopic = new ROSLIB.Topic({
+  ros: ros,
+  name: "/gps_accuracy",
+  messageType: "geometry_msgs/Point",
+});
+
 const SideRos = (props) => {
   const classes = SharedStyles();
   const [receiveVel, setReceiveVel] = useState([]);
@@ -41,9 +48,7 @@ const SideRos = (props) => {
   // const [receiveBattery, setReceiveBattery] = useState([]);
   // const [receiveCarTemp, setReceiveCarTemp] = useState([]);
   const [isSub, setIsSub] = useState(false);
-
-  let vel_text_class = classes.vel_default;
-  let gear_text_class = classes.gear_default;
+  const [gpsAccuracy, setGPSAccuracy] = useState([0, 0]);
 
   if (!isSub && props.sub) {
     setIsSub(true);
@@ -62,6 +67,9 @@ const SideRos = (props) => {
     // carTempTopic.subscribe(function (message) {
     //   setReceiveCarTemp(message.data);
     // });
+    gpsAccTopic.subscribe(function (message) {
+      setGPSAccuracy(message);
+    });
   }
   if (isSub && !props.sub) {
     setIsSub(false);
@@ -70,15 +78,16 @@ const SideRos = (props) => {
     // signalTopic.unsubscribe();
     // batteryTopic.unsubscribe();
     // carTempTopic.unsubscribe();
+    gpsAccTopic.unsubscribe();
   }
 
   return (
     <Grid item xs container direction="column" className={classes.side}>
-      <Grid item xs className={vel_text_class}>
+      <Grid item xs className={classes.vel_default}>
         {receiveVel} km/h
       </Grid>
       <Box sx={{ mb: "2rem" }}></Box>
-      <Grid item xs className={gear_text_class}>
+      <Grid item xs className={classes.gear_default}>
         <Gear gear={receiveGear} />
       </Grid>
       {/* <Grid item xs>
@@ -90,6 +99,9 @@ const SideRos = (props) => {
       <Grid item xs className={classes.temp_text}>
         {receiveCarTemp}&deg;C
       </Grid> */}
+      <Grid item xs className={classes.gps_acc}>
+        <GPSAccuracy state={gpsAccuracy} />
+      </Grid>
     </Grid>
   );
 };
