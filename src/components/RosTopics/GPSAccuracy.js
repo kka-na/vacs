@@ -45,7 +45,7 @@ function GPSAccuracy(element) {
         <br />
         Accuracy
         <br />
-        {acc}cm
+        {acc} m
       </Box>
     </div>
   );
