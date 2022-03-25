@@ -41,7 +41,13 @@ Control Mode
 ##
 
 <p align="center">
-	[!<img alt="cvlab" height="50" src="/public/pngs/cvlab.png">](http://vision.inha.ac.kr/)
-	[!<img alt="aeye" height="50" src="/public/pngs/aeye.png">](http://vision.inha.ac.kr/)
-	[!<img alt="inha" height="50" src="/public/pngs/inha.png">](https://www.inha.ac.kr/kr/index.do)
+<a href="http://vision.inha.ac.kr/">
+	<img height="50" src="/public/pngs/cvlab.png">
+	</a>
+	<a href="http://vision.inha.ac.kr/">
+	<img height="50" src="/public/pngs/aeye.png">
+	</a>
+	<a href="https://www.inha.ac.kr/kr/index.do">
+	<img height="50" src="/public/pngs/inha.png">
+	</a>
 </p>
