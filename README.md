@@ -38,7 +38,7 @@ Control Mode
 
 <img src="/public/pngs/control.png"/>
 
-##
+## hello
 
 <p align="center">
 <a href="http://vision.inha.ac.kr/">
