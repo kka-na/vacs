@@ -9,7 +9,7 @@
 In the project directory, you can run :
 
 ```
-npm install
+npm install 'lgtm'
 ```
 
 Installation libraries.
