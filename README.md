@@ -38,10 +38,16 @@ Control Mode
 
 <img src="/public/pngs/control.png"/>
 
-##
+## hello
 
 <p align="center">
+<a href="http://vision.inha.ac.kr/">
 	<img height="50" src="/public/pngs/cvlab.png">
+	</a>
+	<a href="http://vision.inha.ac.kr/">
 	<img height="50" src="/public/pngs/aeye.png">
+	</a>
+	<a href="https://www.inha.ac.kr/kr/index.do">
 	<img height="50" src="/public/pngs/inha.png">
+	</a>
 </p>
