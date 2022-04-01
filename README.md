@@ -15,7 +15,7 @@ npm install
 Installation libraries.
 
 ```
-npm start
+npm start bad
 ```
 
 Runs the app in the development mode.\
