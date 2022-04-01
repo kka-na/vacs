@@ -9,13 +9,13 @@
 In the project directory, you can run :
 
 ```
-npm install 'lgtm'
+npm install 'lgtm' alpha
 ```
 
 Installation libraries.
 
 ```
-npm start bad
+npm start 
 ```
 
 Runs the app in the development mode.\
