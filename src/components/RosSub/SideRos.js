@@ -8,16 +8,18 @@ import Battery from "../RosTopics/Battery";
 import GPSAccuracy from "../RosTopics/GPSAccuracy";
 
 const ros = new ROSLIB.Ros({ url: "ws://localhost:9090" });
-const velTopic = new ROSLIB.Topic({
-  ros: ros,
-  name: "/can_vel",
-  messageType: "std_msgs/Int8",
-});
-const gearTopic = new ROSLIB.Topic({
-  ros: ros,
-  name: "/can_gear",
-  messageType: "std_msgs/Int8",
-});
+// const velTopic = new ROSLIB.Topic({
+//   ros: ros,
+//   name: "/can_vel",
+//   messageType: "std_msgs/Int8",
+// });
+// const gearTopic = new ROSLIB.Topic({
+//   ros: ros,
+//   name: "/can_gear",
+//   messageType: "std_msgs/Int8",
+// });
+
+
 // const signalTopic = new ROSLIB.Topic({
 //   ros: ros,
 //   name: "/signal_light",
@@ -39,6 +41,11 @@ const gpsAccTopic = new ROSLIB.Topic({
   name: "/gps_accuracy",
   messageType: "geometry_msgs/Point",
 });
+const canRecordTopic = new ROSLIB.Topic({
+  ros: ros,
+  name : "/can_record",
+  messageType : "std_msgs/Int16MultiArray",
+})
 
 const SideRos = (props) => {
   const classes = SharedStyles();
@@ -52,12 +59,12 @@ const SideRos = (props) => {
 
   if (!isSub && props.sub) {
     setIsSub(true);
-    velTopic.subscribe(function (message) {
-      setReceiveVel(message.data);
-    });
-    gearTopic.subscribe(function (message) {
-      setReceiveGear(message.data);
-    });
+    // velTopic.subscribe(function (message) {
+    //   setReceiveVel(message.data);
+    // });
+    // gearTopic.subscribe(function (message) {
+    //   setReceiveGear(message.data);
+    // });
     // signalTopic.subscribe(function (message) {
     //   setReceiveSignal(message.data);
     // });
@@ -67,14 +74,18 @@ const SideRos = (props) => {
     // carTempTopic.subscribe(function (message) {
     //   setReceiveCarTemp(message.data);
     // });
+    canRecordTopic.subscribe(function(message){
+      setReceiveVel(message.data[5]);
+      setReceiveGear(message.data[3]);
+    });
     gpsAccTopic.subscribe(function (message) {
       setGPSAccuracy(message);
     });
   }
   if (isSub && !props.sub) {
     setIsSub(false);
-    velTopic.unsubscribe();
-    gearTopic.unsubscribe();
+    // velTopic.unsubscribe();
+    // gearTopic.unsubscribe();
     // signalTopic.unsubscribe();
     // batteryTopic.unsubscribe();
     // carTempTopic.unsubscribe();

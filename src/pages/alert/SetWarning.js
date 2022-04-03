@@ -151,9 +151,7 @@ const SetWarning = (props) => {
       let emergy = Number(message.data);
       let temp = [];
       temp.push(emergy);
-      if (emergy === 1) {
-        warnDrop(temp, 2);
-      }
+      warnDrop(temp, 2);
     });
   }
 
