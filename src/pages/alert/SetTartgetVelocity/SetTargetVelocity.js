@@ -7,7 +7,7 @@ const ros = new ROSLIB.Ros({ url: "ws://localhost:9090" });
 const targetVelTopic = new ROSLIB.Topic({
   ros: ros,
   name: "/target_vel",
-  messageType: "std_msgs/Float32",
+  messageType: "std_msgs/Int8",
 });
 
 const SetTargetVelocity = (props) => {
@@ -16,7 +16,7 @@ const SetTargetVelocity = (props) => {
   const [targetVel, setTargetVel] = useState(40);
 
   const decreaseVel = () => {
-    if (targetVel > 0) {
+    if (targetVel > 20) {
       setTargetVel((targetVel) => targetVel - 5);
     }
   };
