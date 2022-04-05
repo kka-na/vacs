@@ -16,7 +16,7 @@ const SetTargetVelocity = (props) => {
   const [targetVel, setTargetVel] = useState(40);
 
   const decreaseVel = () => {
-    if (targetVel > 20) {
+    if (targetVel > 30) {
       setTargetVel((targetVel) => targetVel - 5);
     }
   };
