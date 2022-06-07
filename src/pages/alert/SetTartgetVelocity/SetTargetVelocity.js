@@ -18,18 +18,18 @@ const SetTargetVelocity = (props) => {
   const [isDecrease, setIsDecrease] = useState(false);
   const [isIncrease, setIsIncrease] = useState(false);
   const [targetVel, setTargetVel] = useState(40);
+  const [type, setType] = useState(0);
 
-  var setType = 0;
   const decreaseVel = () => {
-    setType = 1;
     if (targetVel > 30) {
       setTargetVel((targetVel) => targetVel - 5);
+      setType(1);
     }
   };
   const increaseVel = () => {
-    setType = 2;
     if (targetVel < 60) {
       setTargetVel((targetVel) => targetVel + 5);
+      setType(2);
     }
   };
   const setVel = () => {
@@ -37,17 +37,17 @@ const SetTargetVelocity = (props) => {
     if (isSub) {
       targetVelTopic.publish({ data: temp });
     }
-
-    if (setType == 1) {
+    if (Number(type) === 1) {
       setIsDecrease(true);
-    } else if (setType == 2) {
+    } else if (Number(type) === 2) {
       setIsIncrease(true);
     }
 
     setTimeout(() => {
       setIsDecrease(false);
       setIsIncrease(false);
-    }, 2000);
+      setType(0);
+    }, 1000);
   };
 
   if (!isSub && props.sub) {

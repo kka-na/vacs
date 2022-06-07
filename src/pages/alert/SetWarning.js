@@ -36,10 +36,16 @@ const emergyStopTopic = new ROSLIB.Topic({
   name: "/estop",
   messageType: "std_msgs/Int8",
 });
+
+const unstableLaneTopic = new ROSLIB.Topic({
+  ros:ros,
+  name:"/unstable_lane",
+  messageType: "std_msgs/Bool",
+})
 const laneWarnTopic = new ROSLIB.Topic({
   ros: ros,
   name: "/lane_warn",
-  messageType: "std_msgs/Int8MultiArray",
+  messageType: "std_msgs/Int8",
 });
 
 const torTypeTopic = new ROSLIB.Topic({
@@ -61,13 +67,14 @@ const SetWarning = (props) => {
   const [isManual, setIsManual] = useState(false);
   const [systemState, setSystemState] = useState([false, false, false]);
 
+
   var mode_num = 0;
 
   const modesChange = (event, mode) => {
     let mode_n;
-    console.log(mode_num);
     if (mode === null) {
       mode_n = modes;
+      
     } else if (Number(modes) === 0 && Number(mode) === 1 && isWarn) {
       // isWarn is true when sensor, system, extop has error
       setIsYellowWarn(true);
@@ -75,15 +82,15 @@ const SetWarning = (props) => {
     } else {
       mode_n = mode;
     }
+
+    if (Number(modes) === 0 && Number(mode_n) === 1) {
+      setIsAutopilot(true);
+    }
+    if (Number(modes) === 1 && Number(mode_n) === 0) {
+      setIsManual(true);
+    }
+
     if (mode_num !== mode_n) {
-      if (Number(mode_num) === 0 && Number(mode_n) === 1) {
-        console.log("auto");
-        setIsAutopilot(true);
-      }
-      if (Number(mode_num) === 1 && Number(mode_n) === 0) {
-        console.log("manual");
-        setIsManual(true);
-      }
       mode_num = mode_n;
     }
 
@@ -96,7 +103,7 @@ const SetWarning = (props) => {
     setTimeout(() => {
       setIsAutopilot(false);
       setIsManual(false);
-    }, 2000);
+    }, 1000);
   };
   let warns = [
     { id: 1, value: false }, //Sensor Anomalies
@@ -151,7 +158,7 @@ const SetWarning = (props) => {
         if (mode_num === 1) {
           setIsRedWarn(false);
         }
-      } else {
+      } else if(mode_num === 0){
         setElseMessage();
       }
     }
@@ -161,10 +168,11 @@ const SetWarning = (props) => {
     setIsSub(true);
     modeTopic.subscribe(function (message) {
       let mode = parseInt(message.data);
+      
       if (mode_num !== mode) {
         mode_num = mode;
       }
-      console.log(warn_num);
+
       if (mode === 0 && warn_num === 0) {
         setIsRedWarn(false);
       }
@@ -186,11 +194,17 @@ const SetWarning = (props) => {
     });
 
     //New Added
+    unstableLaneTopic.subscribe(function(message){
+      let ulane = Number(message.data);
+      let temp = [];
+      temp.push(ulane);
+      warnDrop(temp, 3);
+    });
     //if car on the lane ( 30% )
     laneWarnTopic.subscribe(function (message) {
       let temp = message.data;
-      if (temp.includes(1)) {
-        if (mode_num == 1) {
+      if (Number(temp) === 1) {
+        if (mode_num === 1) {
           setIsLaneWarn(true);
         }
       } else {
@@ -216,6 +230,7 @@ const SetWarning = (props) => {
     sensorStateTopic.unsubscribe();
     systemStateTopic.unsubscribe();
     emergyStopTopic.unsubscribe();
+    unstableLaneTopic.unsubscribe();
     laneWarnTopic.unsubscribe();
     torTypeTopic.unsubscribe();
   }
