@@ -58,6 +58,7 @@ function SetDiag(props) {
           <Diag x="42.5%" y="53%" name="LiDAR" error={error[2]}></Diag>
           <Diag x="42.5%" y="68%" name="GPS" error={error[3]}></Diag>
           <Diag x="42.5%" y="83%" name="INS" error={error[4]}></Diag>
+          <Diag x="41%" y="1%" name="RADAR" error={error[5]}></Diag>
         </Paper>
       );
     } else {
@@ -68,6 +69,7 @@ function SetDiag(props) {
           <Diag x="42.5%" y="53%" name="LiDAR"></Diag>
           <Diag x="42.5%" y="68%" name="GPS"></Diag>
           <Diag x="42.5%" y="83%" name="INS"></Diag>
+          <Diag x="41%" y="1%" name="RADAR"></Diag>
         </Paper>
       );
     }
