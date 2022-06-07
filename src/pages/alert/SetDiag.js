@@ -20,7 +20,7 @@ const velTopic = new ROSLIB.Topic({
 function SetDiag(props) {
   const classes = AlertStyles();
   const [isSub, setIsSub] = useState(false);
-  const [error, setError] = useState([true, true, true, true, true]);
+  const [error, setError] = useState([true, true, true, true, true, true]);
   const [trigger, setTrigger] = useState(0);
   const [redCarClass, setRedCarClass] = useState(classes.diag_paper_undefined);
 

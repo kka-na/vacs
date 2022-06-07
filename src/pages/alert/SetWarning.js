@@ -35,6 +35,17 @@ const emergyStopTopic = new ROSLIB.Topic({
   name: "/estop",
   messageType: "std_msgs/Int8",
 });
+const laneWarnTopic = new ROSLIB.Topic({
+  ros:ros,
+  name:"/lane_warn",
+  messageType:"std_msgs/Int8MultiArray",
+});
+
+const torTypeTopic = new ROSLIB.Topic({
+  ros:ros,
+  name:"/tor_type",
+  messageType:"std_msgs/Int8MultiArray",
+});
 
 const SetWarning = (props) => {
   const classes = AlertStyles();
@@ -44,6 +55,7 @@ const SetWarning = (props) => {
   const [isWarn, setIsWarn] = useState(false);
   const [isRedWarn, setIsRedWarn] = useState(false);
   const [isYellowWarn, setIsYellowWarn] = useState(false);
+  const [isLaneWarn, setIsLaneWarn] = useState(false);
   const [systemState, setSystemState] = useState([false, false, false]);
 
   var mode_num = 0;
@@ -53,6 +65,7 @@ const SetWarning = (props) => {
     if (mode === null) {
       mode_n = modes;
     } else if (Number(modes) === 0 && Number(mode) === 1 && isWarn) {
+      // isWarn is true when sensor, system, extop has error
       setIsYellowWarn(true);
       mode_n = modes;
     } else {
@@ -153,6 +166,32 @@ const SetWarning = (props) => {
       temp.push(emergy);
       warnDrop(temp, 2);
     });
+
+
+    //New Added
+    //if car on the lane ( 30% )
+    laneWarnTopic.subscribe(function(message){
+      let temp = message.data;
+      if(temp.includes(1)){
+        if(mode_num == 1){
+          setIsLaneWarn(true);
+        }
+      }else{
+        setIsLaneWarn(false);
+      }
+    });
+    //if TOR request ( normal : 0, intput : 1
+    torTypeTopic.subscribe(function(message){
+      let temp = message.data;
+      if(temp.includes(1)){
+        if(mode_num == 1){
+          setIsYellowWarn(true);
+        }
+      }else{
+        setIsYellowWarn(false);
+      }
+    });
+    
   }
 
   if (isSub && !props.sub) {
@@ -161,11 +200,13 @@ const SetWarning = (props) => {
     sensorStateTopic.unsubscribe();
     systemStateTopic.unsubscribe();
     emergyStopTopic.unsubscribe();
+    laneWarnTopic.unsubscribe();
+    torTypeToipic.unsubscribe();
   }
 
   return (
     <>
-      <DropMessage isRedWarn={isRedWarn} isYellowWarn={isYellowWarn} />
+      <DropMessage isRedWarn={isRedWarn} isYellowWarn={isYellowWarn} isLaneWarn={isLaneWarn}/>
       <Grid item xs container spacing={2}>
         <Grid item xs={4}>
           <ToggleButtonGroup
