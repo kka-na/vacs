@@ -7,7 +7,8 @@ import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import WarnMessage from "./WarnMessage/WarnMessage";
 import SystemState from "./SystemState";
 import SetTargetVelocity from "./SetTartgetVelocity/SetTargetVelocity";
-import DropMessage from "./DropMessage";
+import DropWarning from "./DropWarning";
+import DropAlerting from "./DropAlerting";
 
 const ros = new ROSLIB.Ros({ url: "ws://localhost:9090" });
 const modeTopic = new ROSLIB.Topic({
@@ -36,15 +37,15 @@ const emergyStopTopic = new ROSLIB.Topic({
   messageType: "std_msgs/Int8",
 });
 const laneWarnTopic = new ROSLIB.Topic({
-  ros:ros,
-  name:"/lane_warn",
-  messageType:"std_msgs/Int8MultiArray",
+  ros: ros,
+  name: "/lane_warn",
+  messageType: "std_msgs/Int8MultiArray",
 });
 
 const torTypeTopic = new ROSLIB.Topic({
-  ros:ros,
-  name:"/tor_type",
-  messageType:"std_msgs/Int8MultiArray",
+  ros: ros,
+  name: "/tor_type",
+  messageType: "std_msgs/Int8MultiArray",
 });
 
 const SetWarning = (props) => {
@@ -56,12 +57,15 @@ const SetWarning = (props) => {
   const [isRedWarn, setIsRedWarn] = useState(false);
   const [isYellowWarn, setIsYellowWarn] = useState(false);
   const [isLaneWarn, setIsLaneWarn] = useState(false);
+  const [isAutopilot, setIsAutopilot] = useState(false);
+  const [isManual, setIsManual] = useState(false);
   const [systemState, setSystemState] = useState([false, false, false]);
 
   var mode_num = 0;
 
   const modesChange = (event, mode) => {
     let mode_n;
+    console.log(mode_num);
     if (mode === null) {
       mode_n = modes;
     } else if (Number(modes) === 0 && Number(mode) === 1 && isWarn) {
@@ -72,14 +76,28 @@ const SetWarning = (props) => {
       mode_n = mode;
     }
     if (mode_num !== mode_n) {
+      if (Number(mode_num) === 0 && Number(mode_n) === 1) {
+        console.log("auto");
+        setIsAutopilot(true);
+      }
+      if (Number(mode_num) === 1 && Number(mode_n) === 0) {
+        console.log("manual");
+        setIsManual(true);
+      }
       mode_num = mode_n;
     }
+
     setModes(mode_n);
+
     if (isSub) {
       modeSetTopic.publish({ data: mode_n });
     }
-  };
 
+    setTimeout(() => {
+      setIsAutopilot(false);
+      setIsManual(false);
+    }, 2000);
+  };
   let warns = [
     { id: 1, value: false }, //Sensor Anomalies
     { id: 2, value: false }, //Emergy Stop
@@ -167,31 +185,29 @@ const SetWarning = (props) => {
       warnDrop(temp, 2);
     });
 
-
     //New Added
     //if car on the lane ( 30% )
-    laneWarnTopic.subscribe(function(message){
+    laneWarnTopic.subscribe(function (message) {
       let temp = message.data;
-      if(temp.includes(1)){
-        if(mode_num == 1){
+      if (temp.includes(1)) {
+        if (mode_num == 1) {
           setIsLaneWarn(true);
         }
-      }else{
+      } else {
         setIsLaneWarn(false);
       }
     });
     //if TOR request ( normal : 0, intput : 1
-    torTypeTopic.subscribe(function(message){
+    torTypeTopic.subscribe(function (message) {
       let temp = message.data;
-      if(temp.includes(1)){
-        if(mode_num == 1){
+      if (temp.includes(1)) {
+        if (mode_num == 1) {
           setIsYellowWarn(true);
         }
-      }else{
+      } else {
         setIsYellowWarn(false);
       }
     });
-    
   }
 
   if (isSub && !props.sub) {
@@ -201,12 +217,17 @@ const SetWarning = (props) => {
     systemStateTopic.unsubscribe();
     emergyStopTopic.unsubscribe();
     laneWarnTopic.unsubscribe();
-    torTypeToipic.unsubscribe();
+    torTypeTopic.unsubscribe();
   }
 
   return (
     <>
-      <DropMessage isRedWarn={isRedWarn} isYellowWarn={isYellowWarn} isLaneWarn={isLaneWarn}/>
+      <DropWarning isRedWarn={isRedWarn} isYellowWarn={isYellowWarn} />
+      <DropAlerting
+        isLaneWarn={isLaneWarn}
+        isAutopilot={isAutopilot}
+        isManual={isManual}
+      />
       <Grid item xs container spacing={2}>
         <Grid item xs={4}>
           <ToggleButtonGroup
