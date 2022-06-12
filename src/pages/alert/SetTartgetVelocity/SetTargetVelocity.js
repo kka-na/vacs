@@ -47,7 +47,7 @@ const SetTargetVelocity = (props) => {
       setIsDecrease(false);
       setIsIncrease(false);
       setType(0);
-    }, 1000);
+    }, 500);
   };
 
   if (!isSub && props.sub) {

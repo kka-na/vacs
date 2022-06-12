@@ -59,7 +59,7 @@ export default makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     color: "#fff",
-    fontSize: "1.8rem",
+    fontSize: "2.2rem",
   },
   side: {
     display: "flex",

@@ -14,6 +14,29 @@ export default makeStyles((theme) => ({
   mode_toggle_button: {
     "&.MuiToggleButton-root": {
       fontFamily: "Rajdhani, sans-serif",
+      fontSize: "2.6rem",
+      height: "16.5rem",
+      backgroundColor: "#0c1024",
+      color: "#fff",
+      borderRadius: "4px",
+      boxShadow: "5px 5px 7px #05060e, -5px -5px 7px #131a3a",
+      "&.Mui-selected": {
+        backgroundColor: "#85def5",
+        borderRadius: "4px",
+        boxShadow: "5px 5px 7px #05060e, -5px -5px 7px #131a3a",
+        color: "#0c1024",
+        "&:hover": {
+          backgroundColor: "#85def5",
+          borderRadius: "4px",
+          boxShadow: "5px 5px 7px #05060e, -5px -5px 7px #131a3a",
+          color: "#0c1024",
+        },
+      },
+    },
+  },
+  mode_toggle_button_origin: {
+    "&.MuiToggleButton-root": {
+      fontFamily: "Rajdhani, sans-serif",
       fontSize: "1.6rem",
       height: "6.5rem",
       backgroundColor: "#0c1024",

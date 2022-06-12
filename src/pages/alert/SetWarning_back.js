@@ -88,6 +88,11 @@ const SetWarning = (props) => {
       setIsManual(true);
     }
 
+    setTimeout(() => {
+      setIsAutopilot(false);
+      setIsManual(false);
+    }, 500);
+
     if (mode_num !== mode_n) {
       mode_num = mode_n;
     }
@@ -97,11 +102,6 @@ const SetWarning = (props) => {
     if (isSub) {
       modeSetTopic.publish({ data: mode_n });
     }
-
-    setTimeout(() => {
-      setIsAutopilot(false);
-      setIsManual(false);
-    }, 1000);
   };
   let warns = [
     { id: 1, value: false }, //Sensor Anomalies
@@ -137,18 +137,14 @@ const SetWarning = (props) => {
     if (array.includes(1)) {
       setWarnState(msg_num);
       warn_num = msg_num;
-      if (msg_num != 2 && array[2] != 1) {
-        warns[msg_num - 1].value = true;
-      }
+      warns[msg_num - 1].value = true;
       if (warns.some((w) => w.value === true)) {
         //There are more than one error within sensor, system, estop
         setIsWarn(true);
       }
       if (mode_num === 1) {
         // There are any error and when in Autopilot mode
-        if (msg_num != 2 && array[2] != 1) {
-          setIsRedWarn(true);
-        }
+        setIsRedWarn(true);
       }
     } else {
       warns[msg_num - 1].value = false;
@@ -195,14 +191,13 @@ const SetWarning = (props) => {
       warnDrop(temp, 2);
     });
 
-    // //New Added
-    // unstableLaneTopic.subscribe(function (message) {
-    //   let ulane = Number(message.data);
-    //   let temp = [];
-    //   temp.push(ulane);
-    //   warnDrop(temp, 3);
-    // });
-
+    //New Added
+    unstableLaneTopic.subscribe(function (message) {
+      let ulane = Number(message.data);
+      let temp = [];
+      temp.push(ulane);
+      warnDrop(temp, 3);
+    });
     //if car on the lane ( 30% )
     laneWarnTopic.subscribe(function (message) {
       let temp = message.data;
@@ -247,7 +242,7 @@ const SetWarning = (props) => {
         isManual={isManual}
       />
       <Grid item xs container spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <ToggleButtonGroup
             orientation="vertical"
             value={modes}
@@ -269,12 +264,17 @@ const SetWarning = (props) => {
             </ToggleButton>
           </ToggleButtonGroup>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <SetTargetVelocity sub={props.sub} />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={4}>
           <WarnMessage type={warnState} />
           <SystemState state={systemState} />
+        </Grid>
+        <Grid item xs={12}>
+          <Container className={classes.map} maxWidth="lg">
+            <DeckMap sub={props.sub} />
+          </Container>
         </Grid>
       </Grid>
     </>
@@ -282,3 +282,84 @@ const SetWarning = (props) => {
 };
 
 export default SetWarning;
+
+/*
+
+
+<ToggleButton className={classes.mode_toggle_button} value={2}>
+  Test Mode
+</ToggleButton>
+<ToggleButton className={classes.mode_toggle_button} value={3}>
+  License Mode
+</ToggleButton> 
+
+import Warns from "./Warns";
+const btnStateTopic = new ROSLIB.Topic({
+  ros: ros,
+  name: "/btn_state",
+  messageType: "std_msgs/Int8MultiArray",
+});
+const [warns, setWarns] = useState([false,false,false,false,false,false,false,false,false,false,false,false,]);
+<Warns state={warns} id={trigger} />
+btnStateTopic.subscribe(function (message) {
+  let temp = message.data;
+  if (temp.includes(1)) {
+    setWarnState(3);
+  }
+  setWarns(temp);
+  setTrigger((trigger) => trigger + 1);
+});
+btnStateTopic.unsubscribe();
+
+const warningTopic = new ROSLIB.Topic({
+  ros: ros,
+  name: "/warning_state",
+  messageType: "geometry_msgs/Vector3",
+});
+warningTopic.subscribe(function (message) {
+      setWarningState(message.x);
+    });
+warningTopic.unsubscribe();
+
+const btn1StateTopic = new ROSLIB.Topic({ros: ros, name: '/btn1_state', messageType: 'std_msgs/Bool'});
+const btn2StateTopic = new ROSLIB.Topic({ros: ros, name: '/btn2_state', messageType: 'std_msgs/Bool'});
+const btn3StateTopic = new ROSLIB.Topic({ros: ros, name: '/btn3_state', messageType: 'std_msgs/Bool'});
+const btn4StateTopic = new ROSLIB.Topic({ros: ros, name: '/btn4_state', messageType: 'std_msgs/Bool'});
+const btn5StateTopic = new ROSLIB.Topic({ros: ros, name: '/btn5_state', messageType: 'std_msgs/Bool'});
+const btn6StateTopic = new ROSLIB.Topic({ros: ros, name: '/btn6_state', messageType: 'std_msgs/Bool'});
+const [warns, setWarns] = useState([]);
+
+const funcState = (bool, value) =>{
+    let array = warns;let array = warns;
+    if(bool){if(!array.includes(value)){array.push(value);} setWarns(array);}
+    else if(!bool){if(array.includes(value)){array = array.filter(item=>item!=value);} setWarns(array); }
+    console.log(array);
+};value);} setWarns(array);}
+    else if(!bool){if(array.includes(value)){array = array.filter(item=>item!=value);} setWarns(array); }
+    console.log(array);
+};
+
+btn1StateTopic.subscribe(function(message){funcState(message.data, 'btn1')});
+btn2StateTopic.subscribe(function(message){funcState(message.data, 'btn2')});
+btn3StateTopic.subscribe(function(message){funcState(message.data, 'btn3')});
+btn4StateTopic.subscribe(function(message){funcState(message.data, 'btn4')});
+btn5StateTopic.subscribe(function(message){funcState(message.data, 'btn5')});
+btn6StateTopic.subscribe(function(message){funcState(message.data, 'btn6')});
+
+btn1StateTopic.unsubscribe();
+btn2StateTopic.unsubscribe();
+btn3StateTopic.unsubscribe();
+btn4StateTopic.unsubscribe();
+btn5StateTopic.unsubscribe();
+btn6StateTopic.unsubscribe();
+
+<ToggleButtonGroup value={warns} className={classes.warn_toggle_button_group} exclusive fullWidth>
+    <ToggleButton className={classes.warn_toggle_button} value='btn1'>BTN</ToggleButton>
+    <ToggleButton className={classes.warn_toggle_button} value='btn2'>BTN</ToggleButton> 
+    <ToggleButton className={classes.warn_toggle_button} value='btn3'>BTN</ToggleButton>
+    <ToggleButton className={classes.warn_toggle_button} value='btn4'>BTN</ToggleButton>
+    <ToggleButton className={classes.warn_toggle_button} value='btn5'>BTN</ToggleButton>
+    <ToggleButton className={classes.warn_toggle_button} value='btn6'>BTN</ToggleButton>  
+</ToggleButtonGroup>
+
+*/
