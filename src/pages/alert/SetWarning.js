@@ -37,11 +37,11 @@ const emergyStopTopic = new ROSLIB.Topic({
   messageType: "std_msgs/Int8",
 });
 
-const unstableLaneTopic = new ROSLIB.Topic({
-  ros: ros,
-  name: "/unstable_lane",
-  messageType: "std_msgs/Bool",
-});
+// const unstableLaneTopic = new ROSLIB.Topic({
+//   ros: ros,
+//   name: "/unstable_lane",
+//   messageType: "std_msgs/Bool",
+// });
 const laneWarnTopic = new ROSLIB.Topic({
   ros: ros,
   name: "/lane_warn",
@@ -233,7 +233,7 @@ const SetWarning = (props) => {
     sensorStateTopic.unsubscribe();
     systemStateTopic.unsubscribe();
     emergyStopTopic.unsubscribe();
-    unstableLaneTopic.unsubscribe();
+    //unstableLaneTopic.unsubscribe();
     laneWarnTopic.unsubscribe();
     torTypeTopic.unsubscribe();
   }
