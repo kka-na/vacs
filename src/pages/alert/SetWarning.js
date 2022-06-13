@@ -48,9 +48,9 @@ const laneWarnTopic = new ROSLIB.Topic({
   messageType: "std_msgs/Int8",
 });
 
-const torTypeTopic = new ROSLIB.Topic({
+const canSwitchTopic = new ROSLIB.Topic({
   ros: ros,
-  name: "/tor_type",
+  name: "/can_switch",
   messageType: "std_msgs/Int8MultiArray",
 });
 
@@ -107,6 +107,8 @@ const SetWarning = (props) => {
     { id: 1, value: false }, //Sensor Anomalies
     { id: 2, value: false }, //Emergy Stop
     { id: 3, value: false }, //System Anomalies
+    {id:4, value:false},
+    {id:5, value:false},
   ];
 
   function setElseMessage() {
@@ -215,15 +217,8 @@ const SetWarning = (props) => {
       }
     });
     //if TOR request ( normal : 0, intput : 1
-    torTypeTopic.subscribe(function (message) {
-      let temp = message.data;
-      if (temp.includes(1)) {
-        if (mode_num == 1) {
-          setIsYellowWarn(true);
-        }
-      } else {
-        setIsYellowWarn(false);
-      }
+    canSwitchTopic.subscribe(function (message) {
+      warnDrop(message.data, 5);
     });
   }
 
@@ -235,7 +230,7 @@ const SetWarning = (props) => {
     emergyStopTopic.unsubscribe();
     //unstableLaneTopic.unsubscribe();
     laneWarnTopic.unsubscribe();
-    torTypeTopic.unsubscribe();
+    canSwitchTopic.unsubscribe();
   }
 
   return (
