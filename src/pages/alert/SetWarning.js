@@ -107,8 +107,8 @@ const SetWarning = (props) => {
     { id: 1, value: false }, //Sensor Anomalies
     { id: 2, value: false }, //Emergy Stop
     { id: 3, value: false }, //System Anomalies
-    {id:4, value:false},
-    {id:5, value:false},
+    { id: 4, value: false },
+    { id: 5, value: false },
   ];
 
   function setElseMessage() {
@@ -137,7 +137,9 @@ const SetWarning = (props) => {
 
   const warnDrop = (array, msg_num) => {
     if (array.includes(1)) {
-      setWarnState(msg_num);
+      if (msg_num != 2 && array[2] != 1) {
+        setWarnState(msg_num);
+      }
       warn_num = msg_num;
       if (msg_num != 2 && array[2] != 1) {
         warns[msg_num - 1].value = true;
@@ -188,7 +190,9 @@ const SetWarning = (props) => {
     systemStateTopic.subscribe(function (message) {
       let temp = message.data;
       warnDrop(temp, 3);
-      setSystemState(temp);
+      if (mode_num != 1 && temp[2] != 1) {
+        setSystemState(temp);
+      }
     });
     emergyStopTopic.subscribe(function (message) {
       let emergy = Number(message.data);
