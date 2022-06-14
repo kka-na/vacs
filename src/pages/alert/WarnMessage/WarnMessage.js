@@ -13,6 +13,7 @@ const WarnMessage = (element) => {
     "System Anomalies Detected",
     "Another Anomalied Detected",
     "TOR Request",
+    "Lane Departure",
   ]);
   const [messageIdx, setMessageIdx] = useState(0);
   useEffect(() => {

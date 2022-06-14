@@ -37,11 +37,6 @@ const emergyStopTopic = new ROSLIB.Topic({
   messageType: "std_msgs/Int8",
 });
 
-// const unstableLaneTopic = new ROSLIB.Topic({
-//   ros: ros,
-//   name: "/unstable_lane",
-//   messageType: "std_msgs/Bool",
-// });
 const laneWarnTopic = new ROSLIB.Topic({
   ros: ros,
   name: "/lane_warn",
@@ -107,8 +102,9 @@ const SetWarning = (props) => {
     { id: 1, value: false }, //Sensor Anomalies
     { id: 2, value: false }, //Emergy Stop
     { id: 3, value: false }, //System Anomalies
-    { id: 4, value: false },
-    { id: 5, value: false },
+    { id: 4, value: false }, // Another Anomalies
+    { id: 5, value: false }, // TOR Request
+    { id: 6, value: false }, // Lane Deaprture
   ];
 
   function setElseMessage() {
@@ -137,22 +133,16 @@ const SetWarning = (props) => {
 
   const warnDrop = (array, msg_num) => {
     if (array.includes(1)) {
-      if (msg_num != 2 && array[2] != 1) {
-        setWarnState(msg_num);
-      }
+      setWarnState(msg_num);
       warn_num = msg_num;
-      if (msg_num != 2 && array[2] != 1) {
-        warns[msg_num - 1].value = true;
-      }
+      warns[msg_num - 1].value = true;
       if (warns.some((w) => w.value === true)) {
         //There are more than one error within sensor, system, estop
         setIsWarn(true);
       }
       if (mode_num === 1) {
         // There are any error and when in Autopilot mode
-        if (msg_num != 2 && array[2] != 1) {
-          setIsRedWarn(true);
-        }
+        setIsRedWarn(true);
       }
     } else {
       warns[msg_num - 1].value = false;
@@ -172,6 +162,7 @@ const SetWarning = (props) => {
 
   if (!isSub && props.sub) {
     setIsSub(true);
+
     modeTopic.subscribe(function (message) {
       let mode = parseInt(message.data);
 
@@ -184,15 +175,14 @@ const SetWarning = (props) => {
       }
       setModes(Number(mode));
     });
+    
     sensorStateTopic.subscribe(function (message) {
       warnDrop(message.data, 1);
     });
     systemStateTopic.subscribe(function (message) {
       let temp = message.data;
       warnDrop(temp, 3);
-      if (mode_num != 1 && temp[2] != 1) {
-        setSystemState(temp);
-      }
+      setSystemState(temp);
     });
     emergyStopTopic.subscribe(function (message) {
       let emergy = Number(message.data);
@@ -200,14 +190,6 @@ const SetWarning = (props) => {
       temp.push(emergy);
       warnDrop(temp, 2);
     });
-
-    // //New Added
-    // unstableLaneTopic.subscribe(function (message) {
-    //   let ulane = Number(message.data);
-    //   let temp = [];
-    //   temp.push(ulane);
-    //   warnDrop(temp, 3);
-    // });
 
     //if car on the lane ( 30% )
     laneWarnTopic.subscribe(function (message) {
@@ -218,6 +200,11 @@ const SetWarning = (props) => {
         }
       } else {
         setIsLaneWarn(false);
+      }
+      if (Number(temp) === 2) {
+        let temp = [];
+        temp.push(1);
+        warnDrop(temp, 2);
       }
     });
     //if TOR request ( normal : 0, intput : 1
@@ -232,7 +219,6 @@ const SetWarning = (props) => {
     sensorStateTopic.unsubscribe();
     systemStateTopic.unsubscribe();
     emergyStopTopic.unsubscribe();
-    //unstableLaneTopic.unsubscribe();
     laneWarnTopic.unsubscribe();
     canSwitchTopic.unsubscribe();
   }
