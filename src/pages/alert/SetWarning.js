@@ -43,10 +43,10 @@ const laneWarnTopic = new ROSLIB.Topic({
   messageType: "std_msgs/Int8",
 });
 
-const canSwitchTopic = new ROSLIB.Topic({
+const torRecordTopic = new ROSLIB.Topic({  // torRecordTopic
   ros: ros,
-  name: "/can_switch",
-  messageType: "std_msgs/Int8MultiArray",
+  name: "/tor_record", // "/tor_record",
+  messageType: "std_msgs/Int8", // "std_msgs/Int8",
 });
 
 const SetWarning = (props) => {
@@ -202,14 +202,21 @@ const SetWarning = (props) => {
         setIsLaneWarn(false);
       }
       if (Number(temp) === 2) {
-        let temp = [];
-        temp.push(1);
-        warnDrop(temp, 2);
+        let arr = [];
+        arr.push(1);
+        warnDrop(arr, 6);
       }
     });
     //if TOR request ( normal : 0, intput : 1
-    canSwitchTopic.subscribe(function (message) {
-      warnDrop(message.data, 5);
+    torRecordTopic.subscribe(function (message) {
+      let tor = Number(message.data);
+      console.log(tor);
+      let temp = [];
+      if (tor != 0){
+        tor = 1
+      }
+      temp.push(tor);
+      warnDrop(temp, 5);
     });
   }
 
@@ -220,7 +227,7 @@ const SetWarning = (props) => {
     systemStateTopic.unsubscribe();
     emergyStopTopic.unsubscribe();
     laneWarnTopic.unsubscribe();
-    canSwitchTopic.unsubscribe();
+    torRecordTopic.unsubscribe();
   }
 
   return (

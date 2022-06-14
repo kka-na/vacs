@@ -32,7 +32,7 @@ function SystemState(element) {
         ></MorphismButton>
         <Box sx={{ mr: "0.5rem" }}></Box>
         <MorphismButton
-          name="Decision"
+          name="Planning"
           class_name={styleClasses[2]}
         ></MorphismButton>
       </Grid>
