@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Backdrop from "@mui/material/Backdrop";
+import Sound from "react-sound";
+
 
 const DropAlerting = ({
   isLaneWarn,
@@ -11,12 +13,13 @@ const DropAlerting = ({
   // setYellow
   window.soundManager.setup({ debugMode: false });
   const [open, setOpen] = useState(0);
+  const [play, setPlay] = useState(Sound.status.STOPPED);
   const [gifs, setGIFs] = useState();
   let lane_gif = "/gifs/lane.gif";
-  let auto_gif = "gifs/autopilot.gif";
-  let manual_gif = "gifs/manual.gif";
-  let decrease_gif = "gifs/decrease.gif";
-  let increase_gif = "gifs/increase.gif";
+  let auto_gif = "/gifs/autopilot.gif";
+  let manual_gif = "/gifs/manual.gif";
+  let decrease_gif = "/gifs/decrease.gif";
+  let increase_gif = "/gifs/increase.gif";
 
   const handleClose = () => {
     setOpen(false);
@@ -30,8 +33,10 @@ const DropAlerting = ({
     if (isLaneWarn) {
       setGIFs(lane_gif);
       handleToggle();
+      setPlay(Sound.status.PLAYING);
     } else {
       handleClose();
+      setPlay(Sound.status.STOPPED);
     }
   }, [isLaneWarn]);
 
@@ -78,6 +83,7 @@ const DropAlerting = ({
       onClick={handleClose}
     >
       <img src={gifs} alt="placeholder" />
+      <Sound url="/wavs/alert.wav" playStatus={play}/>
     </Backdrop>
   );
 };

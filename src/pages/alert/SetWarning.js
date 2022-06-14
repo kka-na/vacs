@@ -56,7 +56,7 @@ const SetWarning = (props) => {
   const [warnState, setWarnState] = useState(0);
   const [isWarn, setIsWarn] = useState(false);
   const [isRedWarn, setIsRedWarn] = useState(false);
-  const [isYellowWarn, setIsYellowWarn] = useState(false);
+  const [isBlueWarn, setIsBlueWarn] = useState(false);
   const [isLaneWarn, setIsLaneWarn] = useState(false);
   const [isAutopilot, setIsAutopilot] = useState(false);
   const [isManual, setIsManual] = useState(false);
@@ -70,7 +70,7 @@ const SetWarning = (props) => {
       mode_n = modes;
     } else if (Number(modes) === 0 && Number(mode) === 1 && isWarn) {
       // isWarn is true when sensor, system, extop has error
-      setIsYellowWarn(true);
+      setIsBlueWarn(true);
       mode_n = modes;
     } else {
       mode_n = mode;
@@ -142,7 +142,12 @@ const SetWarning = (props) => {
       }
       if (mode_num === 1) {
         // There are any error and when in Autopilot mode
-        setIsRedWarn(true);
+        if(msg_num ===1 || msg_num === 3 || msg_num === 6){
+          setIsRedWarn(true);
+        }else{
+          setIsBlueWarn(true);
+        }
+        
       }
     } else {
       warns[msg_num - 1].value = false;
@@ -150,9 +155,13 @@ const SetWarning = (props) => {
         setWarnState(0);
         warn_num = 0;
         setIsWarn(false);
-        setIsYellowWarn(false);
+        setIsBlueWarn(false);
         if (mode_num === 1) {
-          setIsRedWarn(false);
+          if(msg_num ===1 || msg_num === 3 || msg_num === 6){
+            setIsRedWarn(false);
+          }else{
+            setIsBlueWarn(false);
+          }
         }
       } else if (mode_num === 0) {
         setElseMessage();
@@ -172,6 +181,7 @@ const SetWarning = (props) => {
 
       if (mode === 0 && warn_num === 0) {
         setIsRedWarn(false);
+        setIsBlueWarn(false);
       }
       setModes(Number(mode));
     });
@@ -207,6 +217,7 @@ const SetWarning = (props) => {
         warnDrop(arr, 6);
       }
     });
+
     //if TOR request ( normal : 0, intput : 1
     torRecordTopic.subscribe(function (message) {
       let tor = Number(message.data);
@@ -232,7 +243,7 @@ const SetWarning = (props) => {
 
   return (
     <>
-      <DropWarning isRedWarn={isRedWarn} isYellowWarn={isYellowWarn} />
+      <DropWarning isRedWarn={isRedWarn} isBlueWarn={isBlueWarn} />
       <DropAlerting
         isLaneWarn={isLaneWarn}
         isAutopilot={isAutopilot}
