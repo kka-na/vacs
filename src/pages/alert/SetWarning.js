@@ -152,10 +152,10 @@ const SetWarning = (props) => {
     } else {
       warns[msg_num - 1].value = false;
       if (warns.every((w) => w.value === false)) {
+        
         setWarnState(0);
         warn_num = 0;
         setIsWarn(false);
-        setIsBlueWarn(false);
         if (mode_num === 1) {
           if(msg_num ===1 || msg_num === 3 || msg_num === 6){
             setIsRedWarn(false);
@@ -221,7 +221,6 @@ const SetWarning = (props) => {
     //if TOR request ( normal : 0, intput : 1
     torRecordTopic.subscribe(function (message) {
       let tor = Number(message.data);
-      console.log(tor);
       let temp = [];
       if (tor != 0){
         tor = 1
