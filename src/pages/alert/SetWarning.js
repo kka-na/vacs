@@ -43,9 +43,9 @@ const laneWarnTopic = new ROSLIB.Topic({
   messageType: "std_msgs/Int8",
 });
 
-const torRecordTopic = new ROSLIB.Topic({  // torRecordTopic
+const torTopic = new ROSLIB.Topic({  // torRecordTopic
   ros: ros,
-  name: "/tor_record", // "/tor_record",
+  name: "/tor", // "/tor_record",
   messageType: "std_msgs/Int8", // "std_msgs/Int8",
 });
 
@@ -102,7 +102,6 @@ const SetWarning = (props) => {
     { id: 3, value: false }, // Emergy Stop
     { id: 4, value: false }, // Another Anomalies
     { id: 5, value: false }, // TOR Request
-    { id: 6, value: false }, // Lane Deaprture
   ];
 
 
@@ -134,37 +133,38 @@ const SetWarning = (props) => {
   var warn_num = 0;
 
   const warnDrop = (array, msg_num) => {
+    warn_num = msg_num;
     if (array.includes(1)) {
       setWarnState(msg_num);
-      warn_num = msg_num;
-      warns[msg_num - 1].value = true;
+      warns[warn_num- 1].value = true;
       if (warns.some((w) => w.value === true)) {
         //There are more than one error within sensor, system, estop
         setIsWarn(true);
       }
       if (mode_num === 1) {
         // There are any error and when in Autopilot mode
-        if(msg_num ===1 || msg_num === 2 || msg_num === 6){
+        console.log(warn_num)
+        if(warn_num ==1 || warn_num == 2|| warn_num == 3  || warn_num == 6){
           setIsRedWarn(true);
         }else{
           setIsBlueWarn(true);
         }
         
       }
-    } else {
-      warns[msg_num - 1].value = false;
+    } else{
+      if(msg_num == 5){
+        console.log(array)
+      }
+      warns[warn_num - 1].value = false;
       if (warns.every((w) => w.value === false)) {
-        
         setWarnState(0);
         warn_num = 0;
         setIsWarn(false);
-        if (mode_num === 1) {
-          if(msg_num ===1 || msg_num === 2 || msg_num === 6){
-            setIsRedWarn(false);
-          }else{
-            setIsBlueWarn(false);
-          }
-        }
+        //if(warn_num ==1 || warn_num == 2 || warn_num == 3 || warn_num == 6){
+        setIsRedWarn(false);
+        //}else{
+        setIsBlueWarn(false);
+        //}
       } else if (mode_num === 0) {
         setElseMessage();
       }
@@ -179,11 +179,6 @@ const SetWarning = (props) => {
 
       if (mode_num !== mode) {
         mode_num = mode;
-      }
-
-      if (mode === 0 && warn_num === 0) {
-        setIsRedWarn(false);
-        setIsBlueWarn(false);
       }
       setModes(Number(mode));
     });
@@ -211,26 +206,19 @@ const SetWarning = (props) => {
           setIsLaneWarn(true);
         }
       }
-      else if (Number(temp) === 2) {
-        setIsLaneWarn(false);
-        let arr = [];
-        arr.push(1);
-        warnDrop(arr, 6);
-      }
-      else {
-        let arr = [];
-        arr.push(0);
-        warnDrop(arr, 6);
+      else if (Number(temp) === 0) {
         setIsLaneWarn(false);
       }
     });
 
     //if TOR request ( normal : 0, intput : 1
-    torRecordTopic.subscribe(function (message) {
+    torTopic.subscribe(function (message) {
       let tor = Number(message.data);
       let temp = [];
-      if (tor != 0){
+      if (tor ==1 || tor == 2 || tor ==3 || tor == 7){
         tor = 1
+      }else{
+        tor = 0
       }
       temp.push(tor);
       warnDrop(temp, 5);
@@ -244,7 +232,7 @@ const SetWarning = (props) => {
     systemStateTopic.unsubscribe();
     emergyStopTopic.unsubscribe();
     laneWarnTopic.unsubscribe();
-    torRecordTopic.unsubscribe();
+    torTopic.unsubscribe();
   }
 
   return (
