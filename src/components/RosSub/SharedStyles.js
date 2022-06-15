@@ -25,6 +25,30 @@ export default makeStyles((theme) => ({
       borderRadius: "4px",
       boxShadow: "5px 5px 7px #05060e, -5px -5px 7px #131a3a",
       "&.Mui-selected": {
+        backgroundColor: "#111940",
+        borderRadius: "4px",
+        boxShadow: "5px 5px 7px #05060e, -5px -5px 7px #131a3a",
+        color: "#fff",
+        "&:hover": {
+          backgroundColor: "#111940",
+          borderRadius: "4px",
+          boxShadow: "5px 5px 7px #05060e, -5px -5px 7px #131a3a",
+          color: "#fff",
+        },
+      },
+    },
+  },
+  toggle_button_original: {
+    "&.MuiToggleButton-root": {
+      fontFamily: "Rajdhani, sans-serif",
+      fontSize: "1.2rem",
+      backgroundColor: "#0c1024",
+      color: "#fff",
+      height: "4rem",
+      padding: "0.5rem",
+      borderRadius: "4px",
+      boxShadow: "5px 5px 7px #05060e, -5px -5px 7px #131a3a",
+      "&.Mui-selected": {
         backgroundColor: "#274f8a",
         borderRadius: "4px",
         boxShadow: "5px 5px 7px #05060e, -5px -5px 7px #131a3a",
@@ -70,11 +94,11 @@ export default makeStyles((theme) => ({
   },
   vel_default: {
     color: "#fff",
-    fontSize: "2rem",
+    fontSize: "2.4rem",
   },
   gear_default: {
     color: "#fff",
-    fontSize: "2rem",
+    fontSize: "2.4rem",
   },
   temp_text: {
     marginTop: "0.5rem",

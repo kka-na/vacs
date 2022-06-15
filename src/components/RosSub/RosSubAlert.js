@@ -20,6 +20,23 @@ const RosSubAlert = ({ addSub }) => {
   const [receiveMode, setReceiveMode] = useState([]);
   const [sub, setSub] = useState(false);
 
+  useEffect(() => {
+    addSub(true);
+    modeTopic.subscribe(function (message) {
+      setReceiveMode(message.data);
+    });
+    setSub(true);
+  }, []);
+
+  if (sub) {
+    modeTopic.subscribe(function (message) {
+      setReceiveMode(message.data);
+    });
+  }
+  if (!sub) {
+    modeTopic.unsubscribe();
+  }
+
   const handleChange = (event, newSub) => {
     let sub_n;
     if (newSub === null) {
@@ -47,8 +64,8 @@ const RosSubAlert = ({ addSub }) => {
       <Grid item xs={4} className={classes.mode_text}>
         <Mode mode={receiveMode} />
       </Grid>
-      <Grid item xs={2}></Grid>
-      <Grid item xs={2} className={classes.grid}>
+      <Grid item xs={3}></Grid>
+      <Grid item xs={1} className={classes.grid}>
         <ToggleButtonGroup
           className={classes.toggle_button_group}
           value={sub}
@@ -56,12 +73,14 @@ const RosSubAlert = ({ addSub }) => {
           onChange={handleChange}
           fullWidth
         >
-          <ToggleButton className={classes.toggle_button} value={true}>
-            Subscribe
-          </ToggleButton>
-          <ToggleButton className={classes.toggle_button} value={false}>
-            Unsubscribe
-          </ToggleButton>
+          <ToggleButton
+            className={classes.toggle_button}
+            value={true}
+          ></ToggleButton>
+          <ToggleButton
+            className={classes.toggle_button}
+            value={false}
+          ></ToggleButton>
         </ToggleButtonGroup>
       </Grid>
     </Grid>

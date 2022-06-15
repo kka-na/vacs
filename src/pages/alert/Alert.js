@@ -8,15 +8,15 @@ import Footer from "../../components/Footer/Footer";
 
 const Alert = () => {
   const [getSub, setSub] = useState(false);
+
   const addSub = (bool) => {
-    console.log("Add Sub");
     setSub(bool);
   };
 
   return (
     <Box m={3} mt={1}>
       <RosSubAlert addSub={addSub} />
-      <Box mt={1}></Box>
+      <Box mt={4}></Box>
       <Grid container spacing={2}>
         <Grid item xs={1}>
           <SideRos sub={getSub} />

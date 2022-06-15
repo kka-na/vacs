@@ -10,7 +10,7 @@ const Styles = makeStyles((theme) => ({
     marginBottom: "2rem",
     borderRadius: "5rem",
     color: "#fff",
-    fontSize: "2.5rem",
+    fontSize: "3rem",
   },
   selected_gear_text: {
     padding: "1rem 1.75rem 1rem 1.75rem",
@@ -20,7 +20,7 @@ const Styles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     color: "#fffff3", //42f5ba
-    fontSize: "2.5rem",
+    fontSize: "3rem",
     backgroundColor: "#6569d7",
   },
 }));

@@ -8,7 +8,7 @@ const Styles = makeStyles((theme) => ({
     padding: "1rem 1.75rem 1rem 1.75rem",
     marginBottom: "2rem",
     color: "#fff",
-    fontSize: "1.2rem",
+    fontSize: "2rem",
   },
   center: {
     marginBottom: "10%",
