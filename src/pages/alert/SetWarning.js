@@ -68,10 +68,6 @@ const SetWarning = (props) => {
     let mode_n;
     if (mode === null) {
       mode_n = modes;
-    } else if (Number(modes) === 0 && Number(mode) === 1 && isWarn) {
-      // isWarn is true when sensor, system, extop has error
-      setIsBlueWarn(true);
-      mode_n = modes;
     } else {
       mode_n = mode;
     }
@@ -98,33 +94,39 @@ const SetWarning = (props) => {
       setIsManual(false);
     }, 1000);
   };
+
+
   let warns = [
-    { id: 1, value: false }, //Sensor Anomalies
-    { id: 2, value: false }, //Emergy Stop
-    { id: 3, value: false }, //System Anomalies
+    { id: 1, value: false }, // Sensor Anomalies
+    { id: 2, value: false }, // System Anomalies
+    { id: 3, value: false }, // Emergy Stop
     { id: 4, value: false }, // Another Anomalies
     { id: 5, value: false }, // TOR Request
     { id: 6, value: false }, // Lane Deaprture
   ];
 
+
+  function priorityMessage(msg_num){
+    for(let i=0; i<6; i++){
+      if (i===msg_num){
+        continue;
+      }
+      else{
+        if(warns[i].value){
+          setWarnState(warns[i].id);
+          break;
+        }else{
+          continue;
+        }
+      }
+    }
+  }
   function setElseMessage() {
-    if (!warns[0].value) {
-      if (warns[2].value) {
-        setWarnState(warns[2].id);
-      } else if (warns[1].value) {
-        setWarnState(warns[1].id);
-      }
-    } else if (!warns[2].value) {
-      if (warns[0].value) {
-        setWarnState(warns[0].id);
-      } else if (warns[1].value) {
-        setWarnState(warns[1].id);
-      }
-    } else if (!warns[1].value) {
-      if (warns[0].value) {
-        setWarnState(warns[0].id);
-      } else if (warns[2].value) {
-        setWarnState(warns[2].id);
+    for(let i=0; i<6; i++){
+      if(!warns[i].value){
+        priorityMessage(i);
+      }else{
+        continue;
       }
     }
   }
@@ -142,7 +144,7 @@ const SetWarning = (props) => {
       }
       if (mode_num === 1) {
         // There are any error and when in Autopilot mode
-        if(msg_num ===1 || msg_num === 3 || msg_num === 6){
+        if(msg_num ===1 || msg_num === 2 || msg_num === 6){
           setIsRedWarn(true);
         }else{
           setIsBlueWarn(true);
@@ -157,7 +159,7 @@ const SetWarning = (props) => {
         warn_num = 0;
         setIsWarn(false);
         if (mode_num === 1) {
-          if(msg_num ===1 || msg_num === 3 || msg_num === 6){
+          if(msg_num ===1 || msg_num === 2 || msg_num === 6){
             setIsRedWarn(false);
           }else{
             setIsBlueWarn(false);
@@ -191,14 +193,14 @@ const SetWarning = (props) => {
     });
     systemStateTopic.subscribe(function (message) {
       let temp = message.data;
-      warnDrop(temp, 3);
+      warnDrop(temp, 2);
       setSystemState(temp);
     });
     emergyStopTopic.subscribe(function (message) {
       let emergy = Number(message.data);
       let temp = [];
       temp.push(emergy);
-      warnDrop(temp, 2);
+      warnDrop(temp, 3);
     });
 
     //if car on the lane ( 30% )
@@ -208,13 +210,18 @@ const SetWarning = (props) => {
         if (mode_num === 1) {
           setIsLaneWarn(true);
         }
-      } else {
-        setIsLaneWarn(false);
       }
-      if (Number(temp) === 2) {
+      else if (Number(temp) === 2) {
+        setIsLaneWarn(false);
         let arr = [];
         arr.push(1);
         warnDrop(arr, 6);
+      }
+      else {
+        let arr = [];
+        arr.push(0);
+        warnDrop(arr, 6);
+        setIsLaneWarn(false);
       }
     });
 

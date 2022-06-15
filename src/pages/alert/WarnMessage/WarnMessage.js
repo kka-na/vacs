@@ -9,8 +9,8 @@ const WarnMessage = (element) => {
   const [messages, setMessages] = useState([
     "Stable State",
     "Sensor Anomalies Detected",
-    "Emergency Stop Request",
     "System Anomalies Detected",
+    "Emergency Stop Request",
     "Another Anomalied Detected",
     "TOR Request",
     "Lane Departure",

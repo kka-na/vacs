@@ -48,7 +48,7 @@ const DropWarning = ({ isRedWarn, isBlueWarn }) => {
 
   return (
     <Backdrop
-      sx={{ backgroundColor: "rgba(0, 0, 0, 0.3)", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      sx={{ backgroundColor: "rgba(0, 0, 0, 0.3)", color: "#fff",zIndex: (theme) => theme.zIndex.drawer + 1 }}
       open={open}
       // onClick={handleClose}
     >
