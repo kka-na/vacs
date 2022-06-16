@@ -64,7 +64,7 @@ function SetDiag(props) {
     } else {
       return (
         <Paper className={redCarClass}>
-          <Diag x="33%" y="41%" name="Wide Camera"></Diag>
+          <Diag x="33%" y="41%" name="Camera"></Diag>
           <Diag x="53%" y="41%" name="LKAS"></Diag>
           <Diag x="43%" y="53%" name="LiDAR"></Diag>
           <Diag x="43%" y="68%" name="GPS"></Diag>
