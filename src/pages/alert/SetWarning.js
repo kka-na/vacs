@@ -146,6 +146,7 @@ const SetWarning = (props) => {
         console.log(warn_num)
         if(warn_num ==1 || warn_num == 2|| warn_num == 3  || warn_num == 6){
           setIsRedWarn(true);
+          setIsLaneWarn(false);
         }else{
           setIsBlueWarn(true);
         }
