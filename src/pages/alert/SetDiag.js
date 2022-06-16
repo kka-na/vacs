@@ -53,8 +53,8 @@ function SetDiag(props) {
     if (props.sub) {
       return (
         <Paper className={redCarClass}>
-          <Diag x="33%" y="41%" name="Wide Camera" error={error[0]}></Diag>
-          <Diag x="53%" y="41%" name="Narrow Camera" error={error[1]}></Diag>
+          <Diag x="33%" y="41%" name="Camera" error={error[0]}></Diag>
+          <Diag x="53%" y="41%" name="LKAS" error={error[1]}></Diag>
           <Diag x="43%" y="53%" name="LiDAR" error={error[2]}></Diag>
           <Diag x="43%" y="68%" name="GPS" error={error[3]}></Diag>
           <Diag x="43%" y="83%" name="INS" error={error[4]}></Diag>
@@ -65,7 +65,7 @@ function SetDiag(props) {
       return (
         <Paper className={redCarClass}>
           <Diag x="33%" y="41%" name="Wide Camera"></Diag>
-          <Diag x="53%" y="41%" name="Narrow Camera"></Diag>
+          <Diag x="53%" y="41%" name="LKAS"></Diag>
           <Diag x="43%" y="53%" name="LiDAR"></Diag>
           <Diag x="43%" y="68%" name="GPS"></Diag>
           <Diag x="43%" y="83%" name="INS"></Diag>
