@@ -53,23 +53,23 @@ function SetDiag(props) {
     if (props.sub) {
       return (
         <Paper className={redCarClass}>
-          <Diag x="33%" y="41%" name="Camera" error={error[0]}></Diag>
-          <Diag x="53%" y="41%" name="LKAS" error={error[1]}></Diag>
-          <Diag x="43%" y="53%" name="LiDAR" error={error[2]}></Diag>
-          <Diag x="43%" y="68%" name="GPS" error={error[3]}></Diag>
-          <Diag x="43%" y="83%" name="INS" error={error[4]}></Diag>
-          <Diag x="43%" y="1%" name="RADAR" error={error[5]}></Diag>
+          <Diag x="30%" y="41%" name="Camera" error={error[0]}></Diag>
+          <Diag x="52%" y="41%" name="LKAS" error={error[1]}></Diag>
+          <Diag x="41.5%" y="53%" name="LiDAR" error={error[2]}></Diag>
+          <Diag x="41.5%" y="68%" name="GPS" error={error[3]}></Diag>
+          <Diag x="41.5%" y="83%" name="INS" error={error[4]}></Diag>
+          <Diag x="40%" y="7%" name="RADAR" error={error[5]}></Diag>
         </Paper>
       );
     } else {
       return (
         <Paper className={redCarClass}>
-          <Diag x="33%" y="41%" name="Camera"></Diag>
-          <Diag x="53%" y="41%" name="LKAS"></Diag>
-          <Diag x="43%" y="53%" name="LiDAR"></Diag>
-          <Diag x="43%" y="68%" name="GPS"></Diag>
-          <Diag x="43%" y="83%" name="INS"></Diag>
-          <Diag x="43%" y="1%" name="RADAR"></Diag>
+          <Diag x="30%" y="41%" name="Camera"></Diag>
+          <Diag x="52%" y="41%" name="LKAS"></Diag>
+          <Diag x="41.5%" y="53%" name="LiDAR"></Diag>
+          <Diag x="41.5%" y="68%" name="GPS"></Diag>
+          <Diag x="41.5%" y="83%" name="INS"></Diag>
+          <Diag x="40%" y="7%" name="RADAR"></Diag>
         </Paper>
       );
     }

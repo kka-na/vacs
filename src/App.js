@@ -13,20 +13,24 @@ import Footer from "./components/Footer/Footer";
 function App() {
   return (
     <ThemeProvider theme={mainTheme}>
-      <div>
-        <BrowserRouter>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/visualize" element={<Visualization />} />
-            <Route path="/alert" element={<Alert />} />
-            <Route path="/control" element={<Control />} />
-            <Route path="/manual" element={<Manual />} />
-          </Routes>
-        </BrowserRouter>
-      </div>
+      <Alert />
     </ThemeProvider>
   );
 }
 
 export default App;
+
+/*
+<div>
+  <BrowserRouter>
+    <Navbar />
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/visualize" element={<Visualization />} />
+      <Route path="/alert" element={<Alert />} />
+      <Route path="/control" element={<Control />} />
+      <Route path="/manual" element={<Manual />} />
+    </Routes>
+  </BrowserRouter>
+</div>
+*/
