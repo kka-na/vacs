@@ -49,6 +49,12 @@ const torTopic = new ROSLIB.Topic({  // torRecordTopic
   messageType: "std_msgs/Int8", // "std_msgs/Int8",
 });
 
+const ttcTopic = new ROSLIB.Topic({  
+  ros: ros,
+  name: "/ttc", 
+  messageType: "std_msgs/Bool",
+});
+
 const SetWarning = (props) => {
   const classes = AlertStyles();
   const [isSub, setIsSub] = useState(false);
@@ -57,6 +63,7 @@ const SetWarning = (props) => {
   const [isWarn, setIsWarn] = useState(false);
   const [isRedWarn, setIsRedWarn] = useState(false);
   const [isBlueWarn, setIsBlueWarn] = useState(false);
+  const [isAEBWarn, setIsAEBWarn] = useState(false);
   const [isLaneWarn, setIsLaneWarn] = useState(false);
   const [isAutopilot, setIsAutopilot] = useState(false);
   const [isManual, setIsManual] = useState(false);
@@ -102,11 +109,12 @@ const SetWarning = (props) => {
     { id: 3, value: false }, // Emergy Stop
     { id: 4, value: false }, // Another Anomalies
     { id: 5, value: false }, // TOR Request
+    { id: 6, value: false }, // AEB Request
   ];
 
 
   function priorityMessage(msg_num){
-    for(let i=0; i<6; i++){
+    for(let i=0; i<7; i++){
       if (i===msg_num){
         continue;
       }
@@ -121,7 +129,7 @@ const SetWarning = (props) => {
     }
   }
   function setElseMessage() {
-    for(let i=0; i<6; i++){
+    for(let i=0; i<7; i++){
       if(!warns[i].value){
         priorityMessage(i);
       }else{
@@ -144,18 +152,17 @@ const SetWarning = (props) => {
       if (mode_num === 1) {
         // There are any error and when in Autopilot mode
         console.log(warn_num)
-        if(warn_num ==1 || warn_num == 2|| warn_num == 3  || warn_num == 6){
+        if(warn_num ==1 || warn_num == 2|| warn_num == 3){
           setIsRedWarn(true);
           setIsLaneWarn(false);
+        }else if(warn_num  == 6){
+          setIsAEBWarn(true);
         }else{
           setIsBlueWarn(true);
         }
         
       }
     } else{
-      if(msg_num == 5){
-        console.log(array)
-      }
       warns[warn_num - 1].value = false;
       if (warns.every((w) => w.value === false)) {
         setWarnState(0);
@@ -165,6 +172,7 @@ const SetWarning = (props) => {
         setIsRedWarn(false);
         //}else{
         setIsBlueWarn(false);
+        setIsAEBWarn(false);
         //}
       } else if (mode_num === 0) {
         setElseMessage();
@@ -216,7 +224,7 @@ const SetWarning = (props) => {
     torTopic.subscribe(function (message) {
       let tor = Number(message.data);
       let temp = [];
-      if (tor ==1 || tor == 2 || tor ==3 || tor == 7){
+      if (tor ==1 || tor == 2 || tor ==3){
         tor = 1
       }else{
         tor = 0
@@ -225,6 +233,13 @@ const SetWarning = (props) => {
       warnDrop(temp, 5);
     });
   }
+
+  ttcTopic.subscribe(function(message){
+    let ttc = Number(message.data);
+    let temp = [];
+    temp.push(ttc);
+    warnDrop(temp, 6);
+  });
 
   if (isSub && !props.sub) {
     setIsSub(false);
@@ -238,7 +253,7 @@ const SetWarning = (props) => {
 
   return (
     <>
-      <DropWarning isRedWarn={isRedWarn} isBlueWarn={isBlueWarn} />
+      <DropWarning isRedWarn={isRedWarn} isBlueWarn={isBlueWarn} isAEBWar={isAEBWarn}/>
       <DropAlerting
         isLaneWarn={isLaneWarn}
         isAutopilot={isAutopilot}

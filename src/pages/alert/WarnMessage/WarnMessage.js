@@ -13,7 +13,7 @@ const WarnMessage = (element) => {
     "Emergency Stop Request",
     "Another Anomalied Detected",
     "TOR Request",
-    "Lane Departure",
+    "AEB Warning",
   ]);
   const [messageIdx, setMessageIdx] = useState(0);
   useEffect(() => {
