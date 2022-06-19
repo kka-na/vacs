@@ -114,7 +114,7 @@ const SetWarning = (props) => {
 
 
   function priorityMessage(msg_num){
-    for(let i=0; i<7; i++){
+    for(let i=0; i<6; i++){
       if (i===msg_num){
         continue;
       }
@@ -129,7 +129,7 @@ const SetWarning = (props) => {
     }
   }
   function setElseMessage() {
-    for(let i=0; i<7; i++){
+    for(let i=0; i<6; i++){
       if(!warns[i].value){
         priorityMessage(i);
       }else{
@@ -193,6 +193,7 @@ const SetWarning = (props) => {
     });
     
     sensorStateTopic.subscribe(function (message) {
+      console.log(message.data)
       warnDrop(message.data, 1);
     });
     systemStateTopic.subscribe(function (message) {
@@ -232,14 +233,15 @@ const SetWarning = (props) => {
       temp.push(tor);
       warnDrop(temp, 5);
     });
+    ttcTopic.subscribe(function(message){
+      let ttc = Number(message.data);
+      let temp = [];
+      temp.push(ttc);
+      warnDrop(temp, 6);
+    });
   }
 
-  ttcTopic.subscribe(function(message){
-    let ttc = Number(message.data);
-    let temp = [];
-    temp.push(ttc);
-    warnDrop(temp, 6);
-  });
+  
 
   if (isSub && !props.sub) {
     setIsSub(false);
