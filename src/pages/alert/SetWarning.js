@@ -255,7 +255,7 @@ const SetWarning = (props) => {
 
   return (
     <>
-      <DropWarning isRedWarn={isRedWarn} isBlueWarn={isBlueWarn} isAEBWar={isAEBWarn}/>
+      <DropWarning isRedWarn={isRedWarn} isBlueWarn={isBlueWarn} isAEBWarn={isAEBWarn}/>
       <DropAlerting
         isLaneWarn={isLaneWarn}
         isAutopilot={isAutopilot}
