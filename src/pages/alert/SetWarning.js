@@ -49,9 +49,9 @@ const torTopic = new ROSLIB.Topic({  // torRecordTopic
   messageType: "std_msgs/Int8", // "std_msgs/Int8",
 });
 
-const ttcTopic = new ROSLIB.Topic({  
+const aebTopic = new ROSLIB.Topic({  
   ros: ros,
-  name: "/ttc", 
+  name: "/aeb", 
   messageType: "std_msgs/Bool",
 });
 
@@ -151,11 +151,10 @@ const SetWarning = (props) => {
       }
       if (mode_num === 1) {
         // There are any error and when in Autopilot mode
-        console.log(warn_num)
         if(warn_num ==1 || warn_num == 2|| warn_num == 3){
           setIsRedWarn(true);
           setIsLaneWarn(false);
-        }else if(warn_num  == 6){
+        }else if(warn_num == 6){
           setIsAEBWarn(true);
         }else{
           setIsBlueWarn(true);
@@ -193,7 +192,6 @@ const SetWarning = (props) => {
     });
     
     sensorStateTopic.subscribe(function (message) {
-      console.log(message.data)
       warnDrop(message.data, 1);
     });
     systemStateTopic.subscribe(function (message) {
@@ -221,6 +219,7 @@ const SetWarning = (props) => {
       }
     });
 
+
     //if TOR request ( normal : 0, intput : 1
     torTopic.subscribe(function (message) {
       let tor = Number(message.data);
@@ -233,10 +232,12 @@ const SetWarning = (props) => {
       temp.push(tor);
       warnDrop(temp, 5);
     });
-    ttcTopic.subscribe(function(message){
-      let ttc = Number(message.data);
+
+
+    aebTopic.subscribe(function(message){
+      let aeb = Number(message.data);
       let temp = [];
-      temp.push(ttc);
+      temp.push(aeb);
       warnDrop(temp, 6);
     });
   }
@@ -251,6 +252,7 @@ const SetWarning = (props) => {
     emergyStopTopic.unsubscribe();
     laneWarnTopic.unsubscribe();
     torTopic.unsubscribe();
+    aebTopic.unsubscribe();
   }
 
   return (
