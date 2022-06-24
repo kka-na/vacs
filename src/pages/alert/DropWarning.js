@@ -31,9 +31,8 @@ const DropWarning = ({ isRedWarn, isBlueWarn, isAEBWarn }) => {
       setWAVs(warn_wav)
       handleToggle();
     } else {
-      //handleClose();
-      setOpen(false);
-      setPlay(Sound.status.STOPPED);
+      handleClose();
+
     }
     setTimeout(()=>{
       setShow(false)
@@ -70,7 +69,7 @@ const DropWarning = ({ isRedWarn, isBlueWarn, isAEBWarn }) => {
     <Backdrop
       sx={{ backgroundColor: "rgba(0, 0, 0, 0.3)", color: "#fff",zIndex: (theme) => theme.zIndex.drawer + 1 }}
       open={open}
-      onClick={handleClose}
+      //onClick={handleClose}
     >
       <Sound url={wavs} playStatus={play} loop={true} />
       <img src={gifs} display={show? 'inherit' : 'none'} alt="placeholder" />
